@@ -166,12 +166,77 @@ enClose
 }
 
 //************************************************************************
-//							NETWORK FUNCTIONS
+//							NETWORK/installation FUNCTIONS
 //****************************************************************
 
 On_homeurl
 {
 	"https://VermilionDev.github.io/ukagaka-HS-AA/src/rd_aradia_megido/"
+}
+
+OnInstallRefuse
+{
+	"Install refused.\e"
+}
+
+//Creating an updates2.dau
+OnUpdatedataCreating
+{
+	"\0\s[0]Updates2.dau being created.\e"
+}
+
+//Finished creating
+OnUpdatedataCreated
+{
+	"\0\s[0]Updates2.dau created.\e"
+}
+
+//Creating a .nar
+//reference0 is the name of what you're making a nar for, reference2 is what you're making (balloon/ghost/etc)
+OnNarCreating
+{
+	"\0\s[0]I am creating a .nar for your %(reference2), '%(reference0)'.\w8\e"
+}
+
+//Finished creating
+//reference0 is the name of what you're making a nar for, reference2 is what you're making (balloon/ghost/etc)
+OnNarCreated
+{
+	"\0\s[0]I have finished making a .nar for your %(reference2).\w8 It is located \_a[OnNarLocation,%(reference1)]here.\_a\e"
+}
+
+//When you click on the anchor in the OnNarCreated dialogue, this function will open the folder you created the .nar in
+OnNarLocation
+{
+	_path = SPLITPATH(reference0)[0] + SPLITPATH(reference0)[1]
+	
+	"\C\![open,file,%(_path)]"
+}
+
+OnUpdateCheckComplete 
+{
+	"update check says '%(reference0)'\e"
+}
+
+
+OnUpdateBegin
+{
+	"\0\s[0]Update Begin\e"
+}
+
+OnUpdateReady
+{
+	"\0\s[0]Update Ready\e"
+}
+
+OnUpdateComplete
+{
+	"\0\s[0]Update Complete\e"
+}
+
+OnUpdateFailure
+{
+	"\0\s[0]Update Failed\e"
 }
 
 //************************************************************************
