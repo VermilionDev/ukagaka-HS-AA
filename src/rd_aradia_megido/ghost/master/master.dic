@@ -1,0 +1,547 @@
+//************************************************************************
+//							TABLE OF CONTENTS
+//****************************************************************
+//		As aradia's codebase expands I'll break this up into separate files but for now- where doin it like this man
+//							BOOT FUNCTIONS
+//							CLOSE FUNCTIONS
+//							NETWORK FUNCTIONS
+//							SHELL FUNCTIONS
+//							Shortcut FUNCTIONS
+//							MENUS - Now found in menuMaster.dic & %(setlang)/menu.dic
+//							AITALK
+//************************************************************************
+//							BOOT FUNCTIONS
+//****************************************************************
+setFirstBootVars
+{
+	//global variables default values
+	
+	//current langauge- only english aradia is available (..for now..)
+	setlang = "en" 
+	//enables typing quirks if the character has one
+	onQuirk = 1
+	//the type of quirk if the character has multiple
+	nowQuirk = "alive"
+	//adds the characters' username before they talk
+	//intended to be used with trollian/pesterchum/
+	chatBalloon = 1
+	//in case i add "sleeping/sitting/floating" modes (means "ghost state")
+	gState = "default"
+	//this colour is trollian's pink - the border i saw most often in the available pictures of trollian i found
+	bColour = "500"
+	
+	//what aradida knows about our version of Earth - "ghost knowledge"
+	gKnow = IARRAY
+	gMood = IARRAY
+	_mood = RAND(100)
+	_bootTime = year + "-" + month + "-" + day + "-" + hour + "," + _mood
+	gMood = (_bootTime,IARRAY)
+}
+
+setBootVars
+{
+	setlang = "en" 
+	onQuirk = 1
+	nowQuirk = "alive"
+	chatBalloon = 1
+	gState = "default"
+	bColour = "306"
+	gKnow = IARRAY
+	userInfo = ("name,","username,","chatType,","species,","birthday,","gameState,","class,","aspect,","lunarSway,")
+	_mood = RAND(100)
+	_bootTime = year + "-" + month + "-" + day + "-" + hour + "," + _mood
+	gMood ,= (_bootTime)
+}
+
+GETUIINDEX
+{
+	_return = -1
+	
+	_i = 0
+	while _return == -1 && _i < ARRAYSIZE(userInfo)
+	{
+		_currentArr = userInfo[_i]
+		
+		if TOLOWER(_argv[0]) == TOLOWER(_currentArr[0])
+		{
+			_return = _i
+		}
+		
+		_i++
+	}
+	
+	_return
+}
+
+OnFirstBoot
+{
+	setFirstBootVars
+	
+	EVAL("%(setlang)FirstBoot")
+}
+
+enFirstBoot
+{
+	_time = hour + ":" + minute
+	
+	"\0\s[0]%sb(1)%sf(0)???? [??] began ???? %sf('306')\napocalypseArisen [AA]%sf(0) at %(_time) --\n%sf('306')%spc(0)AA:...\nAA:oh! hello there!\w6\nAA:is this another dream bubble ive been to so many\w6\nAA: this doesnt feel like one\w6\nAA: have we met before\n%spc(0)/
+	%*\q[Yes we have!,metbefore]\n/
+	%*\q[No, who are you?,notmetbefore]\n/
+	%*\q[Well... (Mention Homestuck) ,tellhstuck]\n/
+	\x\e"
+}
+
+OnBoot
+{
+	setBootVars
+	
+	EVAL("%(setlang)Boot")
+}
+
+enBoot
+{
+	"\0\s[0]%sb(0)%sf('306')"
+	--
+	if 0 != 0 //RED TODO: implement time checks for when aradia was last opened vs how long shes been gone on her end
+	{
+		"%cb('AA')havent seen you in awhile\n"
+		"%cb('AA')hi again!"
+	}
+	else
+	{
+		"%cb('AA')hi"
+		"%cb('AA')hello"
+		"%cb('AA')hey"
+		--
+		"!"
+		" :D"
+		"! :D"
+	}
+	--
+	"\x\e"
+}
+
+Select.metbefore
+{
+	EVAL("%(setlang)MetBefore")
+}
+
+Select.notMetBefore
+{
+	EVAL("%(setlang)NotMetBefore")
+}
+
+Select.tellhstuck
+{
+	EVAL("%(setlang)Tellhstuck")
+}
+
+enMetBefore
+{
+	"\s[0]%sb(1)%sf('306')AA: i dont remember you myself\nAA: maybe you met an alternate version of me\nAA: but anyways nice to meet you\nAA: im going to be looking around while im here so feel free to chat :D\x\e"
+}
+
+enNotMetBefore
+{
+	"\s[0]%sb(1)%sf('306')AA: me either my name is aradia and im made of time\nAA: maid of time actually\nAA: its always nice to meet new people \nAA: and it also nice that we are both new to eachother :D\nAA: im going to be looking around while im here so feel free to chat\x\e"
+}
+
+enTellhstuck
+{
+	"\s[0]%sb(1)You tell Aradia about the comic\n'Homestuck'.%spc(0)%sf('306')\nAA: interesting!\nAA: so you dont know me but you have heard about me\nAA: nice to meet you! \nAA: im going to be looking around while im here so feel free to chat :D\x\e"
+}
+
+//************************************************************************
+//							CLOSE FUNCTIONS
+//****************************************************************
+
+OnClose
+{
+	EVAL("%(setlang)Close")
+}
+
+enClose
+{
+	"\0\s[0]%sb(0)See you!\e"
+}
+
+//************************************************************************
+//							NETWORK FUNCTIONS
+//****************************************************************
+
+On_homeurl
+{
+	"https://VermilionDev.github.io/ukagaka-HS-AA/src/rd_aradia_megido/"
+}
+
+//************************************************************************
+//							SHELL FUNCTIONS
+//****************************************************************
+
+OnShellChanging
+ {
+	case reference0
+	{
+		when "Alive Aradia (Default)"
+		{
+			"\0\s[0]ok i can change into my regular outfit\e"
+		}
+		when "Aradiabot"
+		{
+			"\0\s[0]there are many doomed aradiabots i can introduce you to\e"
+		}
+		when "Aradiasprite"
+		{
+			"\0\s[0]im sure theres one version of me that somehow died as a kernelsprite\e"
+		}
+		when "Ghost Aradia"
+		{
+			"\0\s[0]sure i can find a dead aradia for you to hang out with\e"
+		}
+		when "God Tier"
+		{
+			"\0\s[0]ok i can put on my god tier clothes outfit\e"
+		}
+	}
+ }
+
+OnShellChanged
+{
+	case reference0
+	{
+		when "Alive Aradia (Default)"
+		{
+			nowShell = "default"
+			nowQuirk = "happy"
+			"\0\s[0]being alive is a very enjoyable thing\ni spent so much time dead i had forgotten how it felt\e"
+		}
+		when "Aradiabot"
+		{
+			nowShell = "robot"
+			nowQuirk = "deadfrog"
+			"\0\s[0]this f0rm is 0nly a m0derate impr0vement fr0m being dead\nbut its 0k i guess\e"
+		}
+		when "Aradiasprite"
+		{
+			nowShell = "kernelsprite"
+			nowQuirk = "deadfrog"
+			"\0\s[0]being part fr0g was critical to my sessions success\w8\nribbit\w8\nwh00ps\e"
+		}
+		when "Ghost Aradia"
+		{
+			nowShell = "ghost"
+			nowQuirk = "dead"
+			"\0\s[0]0k im dead n0w\e"
+		}
+		when "God Tier"
+		{
+			nowShell = "godtier"
+			nowQuirk = "happy"
+			"\0\s[0]do you like my wings\ni like them\nthough if alternia still existed i would have been culled for such a mutation\e"
+		}
+	}
+}
+
+//************************************************************************
+//							Shortcut FUNCTIONS
+//****************************************************************
+
+//NOT a LANGUAGE translator, replaces regex-ish-selected text to other stuff for ya
+OnTranslate
+{
+_talk = reference0
+_talk = REPLACE(_talk, "Anchor 1", "\_a[anchor1]Anchor 1\_a")
+_talk = REPLACE(_talk, "Anchor 2", "\_a[anchor2]Anchor 2\_a")
+_talk = REPLACE(_talk, "Anchor 3", "\_a[anchor3]Anchor 3\_a")
+
+	if reference1 == "" && reference2 == "" { //send input box : no event (ref2) , no special flag (ref1)
+		EVAL('"' + REPLACE(_talk,'"','" + CHR(0x22) + "') + '"')
+	}
+	else { //event result from ghost
+		TOSTR(_talk)
+	}
+}
+
+OnAnchorSelect
+{
+	//checking to see if the link is a web address
+	if "http://" _in_ reference0 || "https://" _in_ reference0 
+	{
+		"\j[%(reference0)]\e"
+	}
+}
+
+OnChoiceSelect
+{
+	EVAL("Select.%(reference0)")
+}
+
+//set balloon 
+sb
+{
+	if SHIORI3FW.BalloonName == "Trollian"
+	{
+		case _argv[0]
+		{
+			when 0; "\b[0%(bColour)]"
+			when 1;	"\b[2%(bColour)]"
+		}
+	}
+	else
+	{
+		case _argv[0]
+		{
+			when 0; "\b0"
+			when 1; "\b2"
+		}
+	}
+}
+
+//set font
+sf
+{
+	case _argv[0]
+	{
+		when 0; "\f[color,default]"
+		when "al"; "\f[align,left]"
+		when "ar"; "\f[align,right]"
+		when "nb"; "\f[bold,1]" //oN
+		when "fb"; "\f[bold,0]" //oFF
+		
+		when "000"; "\f[color,255,33,6]" 	//time FG
+		when "002";	"\f[color,255,255,255]"	//space FG, also Doc Scratch
+		when "004";	"\f[color,189,24,100]"	//Heart
+		when "006";	"\f[color,6,255,201]"	//Mind
+		when "008";	"\f[color,253,253,253]"	//Hope
+		when "010";	"\f[color,156,77,173]"	//Rage
+		when "012";	"\f[color,246,250,78]"	//Light
+		when "014";	"\f[color,0,25,87]"		//Void
+		when "016";	"\f[color,71,223,249]"	//Breath
+		when "018";	"\f[color,186,16,22]"	//Blood
+		when "020";	"\f[color,114,235,52]"	//Life
+		when "022";	"\f[color,0,0,0]"		//Doom FG
+		
+		when "100";	"\f[color,183,13,14]"	//Time BG
+		when "102";	"\f[color,85,20,42]"	//Heart BG
+		when "104";	"\f[color,0,146,61]"	//Mind
+		when "106";	"\f[color,255,222,85]"	//Hope
+		when "108";	"\f[color,82,12,97]"	//Rage
+		when "110";	"\f[color,240,132,12]"	//Light
+		when "112";	"\f[color,16,78,162]"	//Void
+		when "114";	"\f[color,67,121,230]"	//Breath
+		when "116";	"\f[color,62,22,1]"		//Blood
+		when "118";	"\f[color,164,151,135]"	//Life
+		when "120";	"\f[color,48,104,0]"	//Doom
+		
+		when "200";	"\f[color,7,21,205]"	//John, Tavrisprite
+		when "202";	"\f[color,181,54,218]"	//Rose, Fefetasprite
+		when "204";	"\f[color,224,7,7]"		//Dave, Auto-responder, Arquiusprite
+		when "206";	"\f[color,74,201,37]"	//Jade, Erisolsprite
+		when "208";	"\f[color,0,213,242]"	//Jane, Nannasprite
+		when "210";	"\f[color,255,111,242]"	//Roxy
+		when "212";	"\f[color,242,164,0]"	//Davesprite, Dirk
+		when "214";	"\f[color,31,148,0]"	//Jadesprite, Jake
+		when "216";	"\f[color,241,65,239]"	//Jaspersprite
+		
+		when "300";	"\f[color,98,98,98]"	//Karkat (grey)
+		when "302";	"\f[color,0,130,130]"	//Terezi / Latula
+		when "304";	"\f[color,43,0,87]"		//Gamzee Only
+		when "306"; "\f[color,161,0,0]"		//Aradia / Damara
+		when "308";	"\f[color,65,102,0]"	//Nepeta / Meulin
+		when "310";	"\f[color,161,80,0]"	//Tavros / Rufioh
+		when "312";	"\f[color,0,86,130]"	//Vriska, Mindfang, Aranea
+		when "314";	"\f[color,0,129,65]"	//Kanaya / Porrim
+		when "316";	"\f[color,106,0,106]"	//Eridan / Cronus
+		when "318";	"\f[color,119,0,60]"	//Feferi / Meenah
+		when "320";	"\f[color,161,161,0]"	//Sollux / Mituna
+		when "322";	"\f[color,255,0,0]"		//Squarewave, Karkat, Kankri, Alt Callie
+		when "324";	"\f[color,108,0,218]"	//Kurloz
+		
+		when "400";	"\f[color,146,146,146]"	//Callie (Grey)
+		when "402";	"\f[color,50,50,50]"	//Caliborn (Grey)
+		when "404";	"\f[color,46,215,58]"	//Caliborn (Green)
+		
+		when "500";	"\f[color,255,85,136]"	//Default Pink
+		when "502";	"\f[color,194,194,194]"	//Default Grey
+	}
+}
+
+//chatBalloon
+cb
+{
+	if chatBalloon == 1
+	{
+		"%(_argv[0]): "
+	}
+}
+
+//spacing
+spc 
+{
+	
+	case _argv[0]
+	{
+		when 0; "\n\n[half]"
+		when 1; "\n\n"
+		when 2; "\n \_l[0]\n[-100]"
+	}
+}
+
+//************************************************************************
+//							     AITALK
+//****************************************************************
+
+AiTalk
+{
+	if RAND(100) < communicateratio
+	{
+		StartCommunicate
+	}
+	else
+	{
+		if mikireflag == 0
+		{
+			if CHAIN.IDName == "" 
+			{
+				RandomTalk
+			}
+			else 
+			{
+				ChainTalk
+			}
+		}
+		else
+		{ 
+			MikireTalk
+		}
+	}
+}
+
+OnLastTalk
+{
+	"%(lastTalk)\e"
+}
+
+RandomTalk
+{
+	//check state, then split off to other dialogue
+	//when to check shell?
+	//when to check balloon?
+	//accessibility? (Quirk on/off)?
+	case gstate
+	{
+		when "default"; lastTalk = EVAL("%(setlang)RandomTalk")
+		
+		//not sure if this would ever get called,
+		//but probably can't hurt to have it
+		others; lastTalk = EVAL("%(setlang)RandomTalk")
+	}	
+	
+	lastTalk
+}
+
+enRandomTalk : nonoverlap_pool
+{
+	//-------RandomTalk Variables for testing
+	_morbidChatAllowed = 0
+	_toldOnComputer = 0
+	_userInMedium = 1
+	_userIsDersite = 1
+	_mood = "good" //"good", "neutral" or "bad"
+	
+	_currTime = "morning" // "dawn", "morning", "noon", "afternoon", "earlyTwilight", "night", "midnight", "postMidnight"
+	//-------end of variables -----------------------------------
+	//Dialogue that doesn't care about aradia's quirk
+	{
+		"\0\s[0]%sb(0)You see Aradia look around the screen"
+		--
+		if _toldOnComputer == 1
+		{
+			". She seems focused on what you're doing\n(or not doing)."
+			". She seems focused on your desktop background."
+			". Briefly, she rests her palm against it,\nbut pulls her hand back."
+		}
+		else
+		{
+			" but you're not sure she understands what it is she is looking at."
+			" but you can't quite tell how she feels about it."
+			". You think she seems a bit curious about it."
+		}
+
+	}
+	
+	
+	
+	//----------if aradia's quirk is active, and is the "alive" type -----------------------------------------
+	if onQuirk == 1 && nowQuirk == "alive"
+	{
+		if _toldOnComputer == 0
+		{
+			"\0\s[0]%sb(0)%sf('306')%cb('AA')i cant figure out what it is exactly\n%cb('AA')but im sure this isnt a regular dream bubble"
+			
+			{
+					"\0\s[0]%sb(0)%sf('306')%cb('AA')you know\n%cb('AA')im not really sure how i arrive here"
+					--
+					""
+					if _mood == "good" 
+					{
+						"\n%cb('AA')but its nice to hang out with you when i do"
+					}
+					elseif _mood == "neutral" 
+					{
+						"\n%cb('AA')but i guess thats the nature of paradox space to do the unexplainable"
+					}
+					else
+					{
+						"\n%cb('AA')going back in time doesnt seem to take me back to the bubble i was in before"
+					}
+			}
+		}
+		
+		{
+			"\0\s[0]%sb(0)%sf('306')%cb('AA')dream bubbles are "
+			--
+			"very "
+			"quite "
+			""
+			--
+			"interesting "
+			"strange "
+			"fun "
+			"fascinating "
+			--
+			"\n%cb('AA')a mashup of everyone's memories both dead and living\n%cb('AA')the environments that form can seem to be new places altogether"
+			"\n%cb('AA')ive been exploring them for sweeps\n%cb('AA')and i always seem to find something new going on"
+		}
+		
+		if _userInMedium == 1
+		{
+			"\0\s[0]%sb(0)%sf('306')%cb('AA')have you slept much while youve been playing\n%cb('AA')one friend of mine slept for the majority of our session\n%cb('AA')another did not sleep at all"
+			
+			if _userIsDersite == 1
+			{
+				"\0\s[0]%sb(0)%sf('306')%cb('AA')do you go on derse much\n%cb('AA')during my own game i wasnt%cb('AA')though i suppose at the time i was dead"
+				"%cb('AA')have you been on derse when the moon enters the veil\n%cb('AA')the voices of the outer gods get much clearer when it is"
+			}
+			
+			if _userIsProspitan == 1
+			{
+				"%cb('AA')have you been on prospit when the moon dips into skaias clouds\n%cb('AA')many things that have happened\n%cb('AA')are happening\n%cb('AA')or will happen\n%cb('AA')are visible in the clouds during that time"
+			}
+		}
+		
+		if _morbidChatAllowed == 1
+		{
+			{
+				"\0\s[0]%sb(0)%sf('306')%cb('AA')i learned from a human that they can lose as much as 50% of their blood before dying\n%cb('AA')though humans will likely pass out before then\n%cb('AA')trolls and especially highbloods can withstand much greater bloodloss"
+				"\0\s[0]%sb(0)%sf('306')%cb('AA')people can eat anything at least once\n%cb('AA')i first heard that phrase from a human\n%cb('AA')but i think the logic applies to any creature that can eat"
+				"\0\s[0]%sb(0)%sf('306')%cb('AA')some corpses, like human ones, will still grow hair and nails for a short time"
+				"\0\s[0]%sb(0)%sf('306')%cb('AA')apparently some human cultures use the bones of their dead peers for tools or decoration\n%cb('AA')instead of putting the dead in a box for a corpse party"
+			}
+			
+		}
+		
+	}
+	--
+	"\e"
+}

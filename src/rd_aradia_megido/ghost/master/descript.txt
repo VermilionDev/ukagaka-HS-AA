@@ -1,0 +1,17 @@
+﻿charset,UTF-8
+
+name,Aradia Megido
+type,ghost
+
+sakura.name,Aradia Megido
+
+craftman,VermilionDev
+craftmanw,VermilionDev
+craftmanurl,https://github.com/VermilionDev
+
+sstp.allowunspecifiedsend,0
+shiori,yaya.dll
+
+icon,aries.ico
+
+balloon,rd_trollian

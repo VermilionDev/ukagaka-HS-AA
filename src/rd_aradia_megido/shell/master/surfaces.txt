@@ -1,0 +1,35 @@
+//--Aradia's Poses---------------------------------------------------------
+
+//base pose
+surface0
+{
+1interval,never
+1pattern0,1000,0,overlay,0,0
+
+element0,overlay,surface0.png,0,0
+
+}
+
+//Happy/excited Pose
+surface1
+{
+1interval,never
+1pattern0,1000,0,overlay,0,0
+
+element0,overlay,surface1505.png,0,0
+}
+
+//Smile
+surface2
+{
+2interval,never
+2pattern0,1100,0,overlay,0,0
+
+1interval,never
+1pattern0,1000,0,overlay,0,0
+
+element0,overlay,surface0.png,0,0
+}
+
+
+

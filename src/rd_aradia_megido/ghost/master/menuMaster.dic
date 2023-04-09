@@ -1,0 +1,940 @@
+//************************************************************************
+//				   MENU MASTER - TABLE OF CONTENTS
+//****************************************************************
+//		This file will have all the menu-related functions that call the language-specific ones
+// 							MAIN MENU
+//							CHAT MENU
+//							BALLOON COLOUR OPTIONS MENU
+//************************************************************************
+//							   MAIN MENU
+//****************************************************************
+
+
+OnMouseDoubleClick
+{
+	//determines who the mouse is clicking on
+	if reference5 == 0 //which button is being used for the click
+	{
+		if reference3 == 0 //if the character is 0 (aradia)
+		{
+			MouseDoubleClickSakura
+		}
+		else
+		{
+			//aradia does not currently have a kero, so this currently should have no way of being called
+			MouseDoubleClickKero
+		}
+	}
+}
+
+MouseDoubleClickSakura
+{
+	EVAL("%(setlang)OpenSakuraMenu")
+}
+
+//************************************************************************
+//							   TOPIC MENU
+//****************************************************************
+OnTopicMenu
+{
+	EVAL("%(setlang)TopicMenu")
+}
+
+OnSakuraTalk
+{
+	EVAL("%(setlang)SakuraTalk")
+}
+
+OnTheirFriends
+{
+	EVAL("%(setlang)TheirFriends")
+}
+
+OnDreamTalk
+{
+	EVAL("%(setlang)DreamTalk")
+}
+
+OnDancesterTalk
+{
+	EVAL("%(setlang)DancesterTalk")
+}
+
+OnTrollTalk
+{
+	EVAL("%(setlang)TrollTalk")
+}
+
+OnHumanTalk
+{
+	EVAL("%(setlang)HumanTalk")
+}
+
+OnOtherSpeciesTalk
+{
+	EVAL("%(setlang)OtherSpeciesTalk")
+}
+
+OnGameTalk
+{
+	EVAL("%(setlang)GameTalk")
+}
+
+OnClasspectTalk
+{
+	EVAL("%(setlang)ClasspectTalk")
+}
+
+//************************************************************************
+//							   CHAT MENU
+//****************************************************************
+
+OnChatMenu
+{
+	EVAL("%(setlang)ChatMenu")
+}
+
+//learning the users name ----------------------------------------------------------------
+Select.tellName
+{
+	"\![open,inputbox,OnNameTeach,-1]\e"
+}
+
+OnNameTeach
+{
+	_tempname = CUTSPACE(reference.raw[0]) //this stores the original name in _tempname
+	_name = reference.raw[0] //putting the raw name into _name to do some tests on it
+	_name = TOLOWER(_name) //changes it to lowercase
+	_name = REPLACE(_name," ","") //removes spaces
+	_name = REPLACE(_name,".","") //removes periods
+	_name = REPLACE(_name,"-","") //removes dashes
+	
+	_pos = GETUIINDEX("name")
+	
+	if _tempname == userInfo[_pos][1]
+	{
+		EVAL("%(setlang)OldName")
+	}
+	elseif _name == "aradia"
+	{
+		EVAL("%(setlang)SameName")
+	}
+	elseif _name == "tavros" || _name == "таврос" || _name == "sollux" || _name == "соллукс" || _name == "karkat" || _name == "каркат" || _name == "nepeta" || _name == "непета" || _name == "kanaya" || _name == "канайя" || _name == "terezi" || _name == "терези" || _name == "vriska" || _name == "вриска" || _name == "equius" || _name == "эквиус" || _name == "gamzee" || _name == "гамзи" || _name == "eridian" || _name == "эридан" || _name == "feferi" || _name == "фефери"
+	{
+		EVAL("%(setlang)TrollsNames")
+	}
+	
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = _tempname
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)AcceptedName")
+}
+
+//learning the users username + initials ----------------------------------------------------------------
+Select.tellUsername
+{
+	EVAL("%(setlang)TellUsername")
+}
+
+OnUsernameTeach
+{
+	_tempname = CUTSPACE(reference.raw[0]) //this stores the original name in _tempname
+	_name = reference.raw[0] //putting the raw name into _name to do some tests on it
+	_name = TOLOWER(_name) //changes it to lowercase
+	_name = REPLACE(_name," ","") //removes spaces
+	_name = REPLACE(_name,".","") //removes periods
+	_name = REPLACE(_name,"-","") //removes dashes
+	
+	_pos = GETUIINDEX("username")
+	
+	if _tempname == userInfo[_pos][1]
+	{
+		EVAL("%(setlang)OldUsername")
+	}
+	
+	//username is valid, grab the first character and then look for a capital letter
+	_initials = TOUPPER(SUBSTR(_tempname,0,1))
+	_i = 0
+	
+	while STRLEN(_initials) < 2
+	{
+		_currentChar = SUBSTR(_tempname,_i,1)
+		
+		
+		if _currentChar == TOUPPER(_currentChar)
+		{
+				_initials += _currentChar
+		}
+		
+		_i++
+	}
+	
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = _tempname
+	_tempArr[2] = _initials
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)AcceptedUsername")
+}
+
+//learning the users chat type ----------------------------------------------------------------
+Select.tellChatType
+{
+	EVAL("%(setlang)TellChatType")
+}
+
+Select.pesterChat
+{
+	_pos = GETUIINDEX("chatType")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "pester"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)PesterChat")
+}
+
+Select.trollChat
+{
+	_pos = GETUIINDEX("chatType")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "troll"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)TrollChat")
+}
+
+Select.cheerChat
+{
+	_pos = GETUIINDEX("chatType")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "cheer"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)CheerChat")
+}
+
+Select.jeerChat
+{
+	_pos = GETUIINDEX("chatType")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "jeer"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)JeerChat")
+}
+
+Select.customChatType
+{
+	"\![open,inputbox,OnChatTypeTeach,-1]\e"
+}
+
+//learning the users species ----------------------------------------------------------------
+Select.tellSpecies
+{
+	EVAL("%(setlang)TellSpecies")
+}
+
+Select.humanSpecies
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "human"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)HumanSpecies")
+}
+
+Select.trollSpecies
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "troll"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)TrollSpecies")
+}
+
+Select.spriteSpecies
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "sprite"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)SpriteSpecies")
+}
+
+Select.chessSpecies
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "chess"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)ChessSpecies")
+}
+
+Select.cherubSpecies
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "cherub"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)CherubSpecies")
+}
+
+Select.luckySpecies
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "lucky"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)LuckySpecies")
+}
+
+Select.customSpecies
+{
+	"\![open,inputbox,OnSpeciesTeach,-1]\e"
+}
+
+//learning the users hemotype (if they say theyre a troll) ----------------------------------------------------------------
+Select.tellHemotype
+{
+	EVAL("%(setlang)TellHemotype")
+}
+
+Select.rustBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "rust"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)rustBlood")
+}
+
+Select.bronzeBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "bronze"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)bronzeBlood")
+}
+
+Select.goldBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "gold"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)goldBlood")
+}
+
+Select.limeBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "lime"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)limeBlood")
+}
+
+Select.oliveBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "olive"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)oliveBlood")
+}
+
+Select.jadeBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "jade"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)jadeBlood")
+}
+
+Select.tealBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "teal"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)tealBlood")
+}
+
+Select.blueBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "blue"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)blueBlood")
+}
+
+Select.indigoBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "indigo"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)indigoBlood")
+}
+
+Select.purpleBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "purple"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)purpleBlood")
+}
+
+Select.violetBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "violet"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)violetBlood")
+}
+
+Select.fuchsiaBlood
+{
+	_pos = GETUIINDEX("species")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = "fuchsia"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)fuchsiaBlood")
+}
+
+Select.customBlood
+{	
+	"\![open,inputbox,OnHemotypeTeach,-1]\e"
+}
+
+//learning the users birthday ----------------------------------------------------------------
+
+Select.tellBirthday
+{
+	EVAL("%(setlang)TellBirthMonth")
+}
+
+Select.setBirthMonth
+{
+	_pos = GETUIINDEX("birthday")
+	_tempArr = userInfo[_pos]
+	_tempArr[2] = _argv[0] + 1
+	userInfo[_pos] = _tempArr
+
+	EVAL("%(setlang)TellBirthday")
+}
+
+OnBirthdayTeach
+{
+	_monthPos = GETUIINDEX("birthday")
+	_tempArr = userInfo[_monthPos]
+	_birthMonth = TOINT(_tempArr[2])
+
+	_tempDay = TOINT(CUTSPACE(reference.raw[0]))
+	
+	_invalidDay = 0
+	
+	case _argv[0]
+	{
+		when "31" {
+			if _birthMonth == 2 || _birthMonth == 4 || _birthMonth == 6 || _birthMonth == 9 || _birthMonth == 11
+			{
+				_invalidDay = 1
+			}
+		}
+		when "30" {
+			if _birthMonth == 2
+			{
+				_invalidDay = 1
+			}
+		}
+		others {
+			if _tempDay < 1 || _tempDay > 31
+			{
+				_invalidDay = 1
+			}
+		}
+	}
+	
+	_tempArr[3] = _tempDay
+	userInfo[_monthPos] = _tempArr
+	
+	if _invalidDay == 1
+	{
+		EVAL("%(setlang)BirthdayInvalid")
+	}
+	elseif _birthMonth == 2 && _tempDay == 29
+	{
+		EVAL("%(setlang)BirthdayLeap")
+	}
+	else
+	{
+		EVAL("%(setlang)BirthdayValid")
+	}
+}
+
+//learning the users gameState ----------------------------------------------------------------
+Select.tellGameStatus
+{
+	EVAL("%(setlang)TellGameStatus")
+}
+
+Select.gameSoon
+{
+	_pos = GETUIINDEX("gameState")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "soon"
+	userInfo[_pos] = _tempArr
+
+	EVAL("%(setlang)GameSoon")
+}
+
+Select.gameNow
+{
+	_pos = GETUIINDEX("gameState")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "now"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)GameNow")
+}
+
+Select.gameWon
+{
+	_pos = GETUIINDEX("gameState")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "won"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)GameWon")
+}
+
+Select.gameLost
+{
+	_pos = GETUIINDEX("gameState")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "lost"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)GameLost")
+}
+
+Select.SkaiaSaidNo
+{
+	_pos = GETUIINDEX("gameState")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "nogame"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)SkaiaSaidNo")
+}
+
+//learning the users class ----------------------------------------------------------------
+Select.tellClass
+{
+	EVAL("%(setlang)TellClass")
+}
+
+Select.bardClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "bard"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)BardClass")
+}
+
+Select.heirClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "heir"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)HeirClass")
+}
+
+Select.knightClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "knight"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)KnightClass")
+}
+
+Select.lordClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "lord"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)LordClass")
+}
+
+Select.mageClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "mage"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)MageClass")
+}
+
+Select.maidClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "maid"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)MaidClass")
+}
+
+Select.museClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "muse"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)MuseClass")
+}
+
+Select.pageClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "page"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)PageClass")
+}
+
+Select.princeClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "prince"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)PrinceClass")
+}
+
+Select.rogueClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "rogue"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)RogueClass")
+}
+
+Select.seerClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "seer"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)SeerClass")
+}
+
+Select.sylphClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "sylph"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)SylphClass")
+}
+
+Select.thiefClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "thief"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)ThiefClass")
+}
+
+Select.witchClass
+{
+	_pos = GETUIINDEX("class")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "witch"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)WitchClass")
+}
+
+Select.customClass
+{
+	"\![open,inputbox,OnClassTeach,-1]\e"
+}
+
+//learning the users aspect ----------------------------------------------------------------
+Select.tellAspect
+{
+	EVAL("%(setlang)TellAspect")
+}
+
+
+Select.bloodAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "blood"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)BloodAspect")
+}
+
+Select.breathAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "breath"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)BreathAspect")
+}
+
+Select.doomAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "doom"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)DoomAspect")
+}
+
+Select.heartAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "heart"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)HeartAspect")
+}
+
+Select.hopeAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "hope"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)HopeAspect")
+}
+
+Select.lifeAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "life"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)LifeAspect")
+}
+
+Select.lightAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "light"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)LightAspect")
+}
+
+Select.mindAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "mind"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)MindAspect")
+}
+
+Select.rageAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "rage"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)RageAspect")
+}
+
+Select.spaceAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "space"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)SpaceAspect")
+}
+
+Select.timeAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "time"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)TimeAspect")
+}
+
+Select.voidAspect
+{
+	_pos = GETUIINDEX("aspect")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "void"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)VoidAspect")
+}
+
+Select.customAspect
+{
+	"\![open,inputbox,OnAspectTeach,-1]\e"
+}
+
+//learning the users lunar sway ----------------------------------------------------------------
+Select.tellLunarSway
+{
+	EVAL("%(setlang)TellLunarSway")
+}
+
+Select.derseSway
+{
+	_pos = GETUIINDEX("lunarSway")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "derse"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)DerseSway")
+}
+
+Select.prospitSway
+{
+	_pos = GETUIINDEX("lunarSway")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "prospit"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)ProspitSway")
+}
+
+Select.bothSway
+{
+	_pos = GETUIINDEX("lunarSway")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "both"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)BothSway")
+}
+
+Select.neitherSway
+{
+	_pos = GETUIINDEX("lunarSway")
+	_tempArr = userInfo[_pos]
+	_tempArr[1] = "neither"
+	userInfo[_pos] = _tempArr
+	
+	EVAL("%(setlang)NeitherSway")
+}
+
+//************************************************************************
+//							   BALLOON COLOUR OPTIONS MENU
+//****************************************************************
+
+OnTrollianColourOptsMenu
+{
+	_hsCat = "0,0,0,0,0,0,0"
+	
+	EVAL("%(setlang)TrollianColourOpts(%(_hsCat))")
+}
+
+OnchangeTrollianBalloon
+{
+	_hsCat = reference0
+	
+	bColour = SUBSTR(reference1,1,STRLEN(reference1)-1)
+	
+	EVAL("%(setlang)TrollianColourOpts(%(_hsCat))")
+}
+
+OnhideCat
+{
+	_hsCat = reference0
+	
+	case reference1
+	{
+		when "0"; _hsCat[0] = "1"
+		when "1"; _hsCat[1] = "1"
+		when "2"; _hsCat[2] = "1"
+		when "3"; _hsCat[3] = "1"
+		when "4"; _hsCat[4] = "1"
+		when "5"; _hsCat[5] = "1"
+	}
+	
+	EVAL("%(setlang)TrollianColourOpts(%(_hsCat))")
+}
+
+OnshowCat
+{
+	_hsCat = reference0
+	
+	case reference1
+	{
+		when "0"; _hsCat[0] = "0"
+		when "1"; _hsCat[1] = "0"
+		when "2"; _hsCat[2] = "0"
+		when "3"; _hsCat[3] = "0"
+		when "4"; _hsCat[4] = "0"
+		when "5"; _hsCat[5] = "0"
+	}
+	
+	EVAL("%(setlang)TrollianColourOpts(%(_hsCat))")
+}
+
+
+

@@ -1,0 +1,787 @@
+//************************************************************************
+//				   ENGLISH MENU - TABLE OF CONTENTS
+//****************************************************************
+//    This file will have all the menu options that will eventually call the language-specific ones
+// 							MAIN MENU
+//							TOPIC MENU
+//							CHAT MENU
+//							BALLOON COLOUR OPTIONS MENU
+//************************************************************************
+//							   MAIN MENU
+//****************************************************************
+
+enOpenSakuraMenu
+{
+	"\0%sb(1)\s[0]\f[color,161,0,0]AA: did you need something"
+	--
+	"\n\n\_q"
+	--
+	"%*\q[What's up?,OnAiTalk]\n"
+	"%*\q[Talk to me,OnAiTalk]\n"
+	--
+	if lastTalk != ""
+	{
+		"%*\q[Say that again?,OnLastTalk]\n"
+		"%*\q[What was that?,OnLastTalk]"
+		"%*\q[Could you repeat that?,OnLastTalk]"
+		--
+		"\n\n[half]"
+	}
+	--
+	"%*\q[Can we talk about...,OnTopicMenu]\n"
+	"%*\q[Can we chat about...,OnTopicMenu]\n"
+	--
+	"%*\q[I wanna tell you something!,OnChatMenu]\n"
+	"%*\q[I've got something to say!,OnChatMenu]\n"
+	--
+	"%*\q[Balloon Menu,OnTrollianColourOptsMenu]\n/
+	%*\q[Functions,dosomething]\n\n[half]/
+	%*\q[Nevermind,CANCEL]\e"
+}
+
+//************************************************************************
+//							   TOPIC MENU
+//****************************************************************
+
+//general chat menu
+enTopicMenu
+{
+	"%sb(1)You ask aradia about...%spc(1)\_q"
+	--
+	"%*\q[Aradia,OnSakuraTalk]          %*\q[Her friends,OnTheirFriends]\n/
+	%*\q[Dreams,OnDreamTalk]          %*\q[Dancesters,OnDancesterTalk]\n/
+	%*\q[Trolls,OnTrollTalk]          %*\q[Humans,OnHumanTalk]\n/
+	%*\q[Other Species,OnOtherSpeciesTalk]%spc(0)"
+	--
+	"%*\q[The game,OnGameTalk]\n/
+	%*\q[Classes/Aspects,OnClasspectTalk]\n%spc(1)"
+	--
+	"%*\q[Go Back,MouseDoubleClickSakura]\n/
+	%*\q[Nevermind,CANCEL]"
+	--
+	"\e"
+}
+
+enSakuraTalk
+{
+	"%cb('AA')i just go with the flow\n%cb('AA')see what is out there"
+}
+
+enTheirFriends
+{
+	"Unimplemented\e"
+}
+
+enDreamTalk
+{
+	"Unimplemented\e"
+}
+
+enDancesterTalk
+{
+	"Unimplemented\e"
+}
+
+enTrollTalk
+{
+	"Unimplemented\e"
+}
+
+enHumanTalk
+{
+	"Unimplemented\e"
+}
+
+enOtherSpeciesTalk
+{
+	"Unimplemented\e"
+}
+
+enGameTalk
+{
+	"Unimplemented\e"
+}
+
+enClasspectTalk
+{
+	"Unimplemented\e"
+}
+
+//************************************************************************
+//							   CHAT MENU
+//****************************************************************
+
+//general chat menu
+enChatMenu
+{
+	"%sb(1)You decide to tell Aradia...\n\n\_q"
+	--
+	"%*\q[Your Name,tellName]\n/
+	%*\q[Your Username,tellUsername]\n/
+	
+	%*\q[How you chat (Pester\, Troll),tellChatType]%spc(0)/
+	%*\q[Your Species,tellSpecies]\n"
+	--
+	if userInfo[4][1] == "troll"
+	{
+		"%*\q[Your Hemotype,tellHemotype]\n"	
+	}
+	--
+	"%*\q[Your Birthday,tellBirthday]%spc(0)/
+	
+	%*\q[If you're playing sburb/sgrub,tellGameStatus]\n/
+	%*\q[Your Class,tellClass]\n/
+	%*\q[Your Aspect,tellAspect]\n/
+	%*\q[Your Lunar Sway,tellLunarSway]%spc(1)"
+	--
+	"%*\q[Go Back,MouseDoubleClickSakura]\n/
+	%*\q[Nevermind,CANCEL]"
+	--
+	"\e"
+}
+
+//telling aradia your name 
+enOldName
+{
+	"You've already told Aradia that that is your name."
+}
+
+enSameName
+{
+		"I'm fairly certain you're not an alternate version of her. Try again."
+		--
+		"\![open,inputbox,OnNameTeach,-1]"
+}
+
+enTrollsNames
+{
+	"I'm fairly certain you're not an alternate version of her friend. Try again."
+	--
+	"\![open,inputbox,OnNameTeach,-1]"
+}
+
+enAcceptedName
+{
+	_pos = GETUIINDEX("name")
+	
+	"\0\s[0]\f[color,161,0,0]okay i can call you %userInfo[_pos][1]"
+}
+
+//telling aradia your username
+enTellUsername
+{
+	"If your username is in the same format as in the Homestuck webcomic, Aradia will be able to figure out your usernames' initials as well."
+	--
+	"\![open,inputbox,OnUsernameTeach,-1]\e"
+}
+
+enOldUsername
+{
+	"You've already told Aradia that that is your username."
+	--
+	"\![open,inputbox,OnUsernameTeach,-1]\e"
+}
+
+enSameUsername
+{
+		"I'm fairly certain you're not an alternate version of her. Try again."
+		--
+		"\![open,inputbox,OnNameTeach,-1]"
+}
+
+enTrollsUsername
+{
+	"I'm fairly certain you're not an alternate version of her friend. Try again."
+	--
+	"\![open,inputbox,OnNameTeach,-1]"
+}
+
+enAcceptedUsername
+{
+	_pos = GETUIINDEX("username")
+	
+	"%cb('AA')so your username is %userInfo[_pos][1] and your initials are %userInfo[_pos][2]\n%cb('AA')interesting\e"
+}
+
+//users chat type
+enTellChatType
+{
+	"When you chat with people, you...%spc(1)"
+	--
+	"%*\q[Pester,pesterChat]\n/
+	%*\q[Troll,trollChat]\n/
+	%*\q[Cheer,cheerChat]\n/
+	%*\q[Jeer,jeerChat]\n/
+	%*\q[Something Else,customChatType]\n"
+}
+
+enPesterChat
+{
+	"%cb('AA')just like some humans i know"
+}
+
+enTrollChat
+{
+	"%cb('AA')just like my troll friends do :D"
+}
+
+enCheerChat
+{
+	"%cb('AA')that sounds like a very <3 <> way to chat"
+}
+
+enJeerChat
+{
+	"%cb('AA')that sounds like a very <3< c8< way to chat"
+}
+
+//users species
+enTellSpecies
+{
+	"%sb(1)You tell Aradia that you're a...%spc(0)"
+	--
+	"%*\q[Human,humanSpecies]\n/
+	%*\q[Troll,trollSpecies]\n/
+	%*\q[Sprite,spriteSpecies]\n/
+	%*\q[Carapacian,chessSpecies]\n/
+	%*\q[Cherub,cherubSpecies]\n/
+	%*\q[Leprechaun,luckySpecies]\n/
+	%*\q[Something Else,customSpecies]%spc(1)"
+	--
+	"%*\q[Go Back,OnChatMenu]\n/
+	%*\q[Nevermind,CANCEL]"
+}
+
+enHumanSpecies
+{
+	"Unimplemented\e"
+}
+
+enTrollSpecies
+{
+	"Unimplemented\e"
+}
+
+enSpriteSpecies
+{
+	"Unimplemented\e"
+}
+
+enChessSpecies
+{
+	"Unimplemented\e"
+}
+
+enCherubSpecies
+{
+	"Unimplemented\e"
+}
+
+enLuckySpecies
+{
+	"Unimplemented\e"
+}
+
+//users hemotype (if they say theyre a troll)
+enTellHemotype
+{
+	"You tell her your hemotype is...%spc(0)"
+	--
+	"%*\q[Rust,rustBlood]\n/
+	%*\q[Bronze,bronzeBlood]\n/
+	%*\q[Gold,goldBlood]\n/
+	%*\q[Lime,limeBlood]\n/
+	%*\q[Olive,oliveBlood]\n/
+	%*\q[Jade,jadeBlood]\n/
+	%*\q[Teal,tealBlood]\n/
+	%*\q[Blue,blueBlood]\n/
+	%*\q[Indigo,indigoBlood]\n/
+	%*\q[Purple,purpleBlood]\n/
+	%*\q[Violet,violetBlood]\n/
+	%*\q[Fuchsia,fuchsiaBlood]\n/
+	%*\q[Something Else,customBlood]%spc(1)"
+	--
+	"%*\q[Go Back,OnChatMenu]\n/
+	%*\q[Nevermind,CANCEL]"
+}
+
+//users birthday
+enTellBirthMonth
+{
+	"%sb(1)You tell her that you're born in the month of...%spc(0)"
+	--
+	"%*\q[January,setBirthMonth(0)]\n/
+	%*\q[February,setBirthMonth(1)]\n/
+	%*\q[March,setBirthMonth(2)]\n/
+	%*\q[April,setBirthMonth(3)]\n/
+	%*\q[May,setBirthMonth(4)]\n/
+	%*\q[June,setBirthMonth(5)]\n/
+	%*\q[July,setBirthMonth(6)]\n/
+	%*\q[August,setBirthMonth(7)]\n/
+	%*\q[September,setBirthMonth(8)]\n/
+	%*\q[October,setBirthMonth(9)]\n/
+	%*\q[November,setBirthMonth(10)]\n/
+	%*\q[December,setBirthMonth(11)]%spc(1)"
+	--
+	"%*\q[Go Back,OnChatMenu]\n/
+	%*\q[Nevermind,CANCEL]"
+}
+
+enTellBirthday
+{
+	_pos = GETUIINDEX("birthday")
+	
+	"so from the earth calender youre born on the %userInfo[_pos][2] month\n"
+	--
+	"what about the day"
+	--
+	"\![open,inputbox,OnBirthdayTeach,-1]\e"
+}
+
+enBirthdayInvalid
+{
+	"That's not a valid date. Try again."
+	--
+	"\![open,inputbox,OnBirthdayTeach,-1]\e"
+}
+
+enBirthdayLeap
+{
+	"so you were born on a leap year"
+}
+
+enBirthdayValid
+{
+	//RED TODO: check if the date is todays date
+	"ill remember that :D"
+}
+
+//users gameState
+enTellGameStatus
+{
+	"You tell her that you're..."
+	--
+	"%*\q[Going to play soon,gameSoon]\n/
+	%*\q[Currently playing,gameNow]\n/
+	%*\q[Already won,gameWon]\n/
+	%*\q[Already lost,gameLost]\n/
+	%*\q[Wont ever play,SkaiaSaidNo]%spc(1)"
+	--
+	"%*\q[Go Back,OnChatMenu]\n/
+	%*\q[Nevermind,CANCEL]"
+}
+
+enGameSoon
+{
+	"Unimplemented\e"
+}
+
+enGameNow
+{
+	"Unimplemented\e"
+}
+
+enGameWon
+{
+	"Unimplemented\e"
+}
+
+enGameLost
+{
+	"Unimplemented\e"
+}
+
+enSkaiaSaidNo
+{
+	"Unimplemented\e"
+}
+
+//users class
+enTellClass
+{
+	"%sb(1)You tell Aradia that your class is...%spc(0)"
+	--
+	"%*\q[Bard,bardClass]     /
+	%*\q[Heir,heirClass]\n/
+	%*\q[Knight,knightClass]   /
+	%*\q[Lord,lordClass]\n/
+	%*\q[Mage,mageClass]     /
+	%*\q[Maid,maidClass]\n/
+	%*\q[Muse,museClass]     /
+	%*\q[Page,pageClass]\n/
+	%*\q[Prince,princeClass]   /
+	%*\q[Rogue,rogueClass]\n/
+	%*\q[Seer,seerClass]     /
+	%*\q[Sylph,sylphClass]\n/
+	%*\q[Thief,thiefClass]    /
+	%*\q[Witch,witchClass]\n/
+	%*\q[Something Else,customClass]%spc(1)"
+	--
+	"%*\q[Go Back,OnChatMenu]\n/
+	%*\q[Nevermind,CANCEL]"
+}
+
+enBardClass
+{
+	"Unimplemented\e"
+}
+
+enHeirClass
+{
+	"Unimplemented\e"
+}
+
+enKnightClass
+{
+	"Unimplemented\e"
+}
+
+enLordClass
+{
+	"Unimplemented\e"
+}
+
+enMageClass
+{
+	"Unimplemented\e"
+}
+
+enMaidClass
+{
+	"Unimplemented\e"
+}
+
+enMuseClass
+{
+	"Unimplemented\e"
+}
+
+enPageClass
+{
+	"Unimplemented\e"
+}
+
+enPrinceClass
+{
+	"Unimplemented\e"
+}
+
+enRogueClass
+{
+	"Unimplemented\e"
+}
+
+enSeerClass
+{
+	"Unimplemented\e"
+}
+
+enSylphClass
+{
+	"Unimplemented\e"
+}
+
+enThiefClass
+{
+	"Unimplemented\e"
+}
+
+enWitchClass
+{
+	"Unimplemented\e"
+}
+
+//users aspect
+enTellAspect
+{
+	"%sb(1)You tell Aradia that your aspect is...%spc(0)"
+	--
+	"%*\q[Blood,bloodAspect]    /
+	%*\q[Breath,breathAspect]\n/
+	%*\q[Doom,doomAspect]     /
+	%*\q[Heart,heartAspect]\n/
+	%*\q[Hope,hopeAspect]     /
+	%*\q[Life,lifeAspect]\n/
+	%*\q[Light,lightAspect]    /
+	%*\q[Mind,mindAspect]\n/
+	%*\q[Rage,rageAspect]     /
+	%*\q[Space,spaceAspect]\n/
+	%*\q[Time,timeAspect]     /
+	%*\q[Void,voidAspect]\n/
+	%*\q[Something Else,customClass]%spc(1)"
+	--
+	"%*\q[Go Back,OnChatMenu]\n/
+	%*\q[Nevermind,CANCEL]"
+}
+
+enBloodAspect
+{
+	"%cb('AA')thats like karkat"
+}
+
+enBreathAspect
+{
+	"%cb('AA')thats like tavros"
+}
+
+enDoomAspect
+{
+	"%cb('AA')thats like sollux"
+}
+
+enHeartAspect
+{
+	"%cb('AA')thats like nepeta"
+}
+
+enHopeAspect
+{
+	"%cb('AA')thats like eridian"
+}
+
+enLifeAspect
+{
+	"%cb('AA')thats like feferi"
+}
+
+enLightAspect
+{
+	"%cb('AA')thats like vriska"
+}
+
+enMindAspect
+{
+	"%cb('AA')thats like terezi"
+}
+
+enRageAspect
+{
+	"%cb('AA')thats like gamzee"
+}
+
+enSpaceAspect
+{
+	"%cb('AA')thats like kanaya"
+}
+
+enTimeAspect
+{
+	"%cb('AA')thats like me :D"
+}
+
+enVoidAspect
+{
+	"%cb('AA')thats like equius"
+}
+
+//users lunar sway
+enTellLunarSway
+{
+	"%sb(1)You tell Aradia that your lunar sway is...%spc(0)"
+	--
+	"%*\q[Derse,derseSway]    /
+	%*\q[Prospit,prospitSway]\n/
+	%*\q[Both,bothSway]     /
+	%*\q[Neither,neitherSway]%spc(1)"
+	--
+	"%*\q[Go Back,OnChatMenu]\n/
+	%*\q[Nevermind,CANCEL]"
+}
+
+enDerseSway
+{
+	"%cb('AA')thats like me :D"
+}
+
+enProspitSway
+{
+	"Unimplemented\e"
+}
+
+enBothSway
+{
+	"%cb('AA')thats like sollux he had two dream selves"
+}
+
+enNeitherSway
+{
+	"%cb('AA')interesting ive never heard of that before\n%cb('AA')but skaia does make a lot of exceptions things that we thought were rules"
+}
+
+//************************************************************************
+//							   BALLOON COLOUR OPTIONS MENU
+//****************************************************************
+
+enTrollianColourOpts
+{
+	_hsCat = _argv
+	
+	"%sb(1)\_q\![set,autoscroll,disable] balloon is %(bColour)\n"
+	--
+	if _hsCat[0] == 0 //show the category options
+	{
+		"%sf('nb')Aspect Foreground%sf('fb')%spc(2)%sf('ar')\q[Hide,OnhideCat,%(CHR(34))%(_hsCat)%(CHR(34)),0]\n%sf('al')"
+		-- 
+		"%sf('000')\q[Time,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b000%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('002')\f[shadowcolor,0,0,0]\q[Space,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b002%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\f[shadowcolor,default]\n%sf('al')"
+		--
+		"%sf('004')\q[Heart,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b004%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('006')\q[Mind,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b006%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('008')\f[shadowcolor,0,0,0]\q[Hope,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b008%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\f[shadowcolor,default]\n%sf('al')"
+		--
+		"%sf('010')\q[Rage,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b010%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('012')\q[Light,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b012%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('014')\q[Void,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b014%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('016')\q[Breath,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b016%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('018')\q[Blood,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b018%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('020')\q[Life,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b020%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('022')\q[Doom,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b022%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)%spc(0)%sf('al')"
+		
+	}
+	else //hide the category options
+	{
+		"%sf('nb')Aspect Foreground%sf('fb')%spc(2)%sf('ar')\q[Show,OnshowCat,%(CHR(34))%(_hsCat)%(CHR(34)),0]%spc(0)%sf('al')"
+	}
+	--
+	if _hsCat[1] == 0 //show the category options
+	{
+		"%sf('nb')Aspect Background%sf('fb')%spc(2)%sf('ar')\q[Hide,OnhideCat,%(CHR(34))%(_hsCat)%(CHR(34)),1]\n%sf('al')"
+		--
+		"%sf('100')\q[Time,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b100%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('022')\q[Space,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b022%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('102')\q[Heart,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b102%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('104')\q[Mind,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b104%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('106')\q[Hope,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b106%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('108')\q[Rage,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b108%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('110')\q[Light,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b110%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('112')\q[Void,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b112%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('114')\q[Breath,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b114%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('116')\q[Blood,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b116%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('118')\q[Life,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b118%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('120')\q[Doom,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b120%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)%spc(0)%sf('al')"
+
+	}
+	else //hide the category options
+	{
+		"%sf('nb')Aspect Background%sf('fb')%spc(2)%sf('ar')\q[Show,OnshowCat,%(CHR(34))%(_hsCat)%(CHR(34)),1]%spc(0)%sf('al')"
+	}
+	-- 
+	if _hsCat[2] == 0 //show the category options
+	{
+		"%sf('nb')Humans & Sprites%sf('fb')%spc(2)%sf('ar')\q[Hide,OnhideCat,%(CHR(34))%(_hsCat)%(CHR(34)),2]\n%sf('al')"
+		--
+		"%sf('200')\q[John,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b200%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('202')\q[Rose,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b202%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('204')\q[Dave,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b204%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('206')\q[Jade,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b206%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('208')\q[Jane,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b208%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('210')\q[Roxy,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b210%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('212')\q[Dirk,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b212%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('214')\q[Jake,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b214%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('216')\q[Jaspersprite,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b216%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)%spc(0)%sf('al')"
+	}
+	else //hide the category options
+	{
+		"%sf('nb')Humans & Sprites%sf('fb')%spc(2)%sf('ar')\q[Show,OnshowCat,%(CHR(34))%(_hsCat)%(CHR(34)),2]%spc(0)%sf('al')"
+	}
+	--
+	if _hsCat[3] == 0 //show the category options
+	{
+		"%sf('nb')Trolls%sf('fb')%spc(2)%sf('ar')\q[Hide,OnhideCat,%(CHR(34))%(_hsCat)%(CHR(34)),3]\n%sf('al')"
+		--
+		"%sf('300')\q[Karkat,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b300%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('302')\q[Terezi / Latula,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b302%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('304')\q[Gamzee,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b304%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('306')\q[Aradia / Damara,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b306%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('308')\q[Nepeta / Meulin,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b308%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('310')\q[Tavros / Rufioh,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b310%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('312')\q[Vriska / Aranea,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b312%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('314')\q[Kanaya / Porrim,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b314%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('316')\q[Eridan / Cronus,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b316%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('318')\q[Feferi / Meenah,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b318%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('320')\q[Sollux / Mituna,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b320%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('322')\q[Karkat / Kankri,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b322%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('324')\q[Kurloz,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b324%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)%spc(0)%sf('al')"
+
+	}
+	else //hide the category options
+	{
+		"%sf('nb')Trolls%sf('fb')%spc(2)%sf('ar')\q[Show,OnshowCat,%(CHR(34))%(_hsCat)%(CHR(34)),3]%spc(0)%sf('al')"
+	}
+	-- 
+	if _hsCat[4] == 0 //show the category options
+	{
+		"%sf('nb')Other Species%sf('fb')%spc(2)%sf('ar')\q[Hide,OnhideCat,%(CHR(34))%(_hsCat)%(CHR(34)),4]\n%sf('al')"
+		--
+		"%sf('400')\q[Calliope,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b400%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('402')\q[Caliborn,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b402%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('404')\q[Caliborn,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b404%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('322')\q[Alt Calliope,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b322%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('002')\f[shadowcolor,0,0,0]\q[Doc Scratch,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b002%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\f[shadowcolor,default]%spc(0)%sf('al')"
+	}
+	else //hide the category options
+	{
+		"%sf('nb')Other Species%sf('fb')%spc(2)%sf('ar')\q[Show,OnshowCat,%(CHR(34))%(_hsCat)%(CHR(34)),4]%spc(0)%sf('al')"
+	}
+	--
+	if _hsCat[5] == 0 //show the category options
+	{
+		"%sf('nb')Misc%sf('fb')%spc(2)%sf('ar')\q[Hide,OnhideCat,%(CHR(34))%(_hsCat)%(CHR(34)),5]\n%sf('al')"
+		--
+		"%sf('500')\q[Default Trollian Pink,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b500%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)\n%sf('al')"
+		--
+		"%sf('502')\q[Default Trollian Grey,OnchangeTrollianBalloon,%(CHR(34))%(_hsCat)%(CHR(34)),%(CHR(34))b502%(CHR(34))]%sf('fb')%spc(2)%sf('ar')██████████%sf(0)%spc(0)%sf('al')"
+	}
+	else //hide the category options
+	{
+		"%sf('nb')Misc%sf('fb')%spc(2)%sf('ar')\q[Show,OnshowCat,%(CHR(34))%(_hsCat)%(CHR(34)),5]%spc(0)%sf('al')"
+	}
+	--
+	//"\x\e"
+}
+
+

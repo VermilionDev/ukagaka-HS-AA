@@ -1,0 +1,11 @@
+charset,UTF-8
+version,1
+option,DisableNoDefineSurfaces
+
+group,AA
+{
+	scope,0
+	0,Base
+	1,Excited
+	2,Smile
+}
