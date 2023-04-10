@@ -47,6 +47,9 @@ setBootVars
 	gState = "default"
 	bColour = "306"
 	gKnow = IARRAY
+	timeBlocks = IARRAY
+	timeBlocks = ("dawn,5,7","morning,8,11","noon,12","afternoon,13,16","evening,17,19","night,20,23","midnight,24","postMidnight,1,4")
+						
 	userInfo = ("name,","username,","chatType,","species,","birthday,","gameState,","class,","aspect,","lunarSway,")
 	_mood = RAND(100)
 	_bootTime = year + "-" + month + "-" + day + "-" + hour + "," + _mood
@@ -70,6 +73,127 @@ GETUIINDEX
 		_i++
 	}
 	
+	_return
+}
+
+//GET TIME BLOCK HOURS
+GETTBHRS
+{
+	_return = -1
+	
+	_i = 0
+	while _return == -1 && _i < ARRAYSIZE(timeBlocks)
+	{
+		_currentArr = timeBlocks[_i]
+		
+		if TOLOWER(_argv[0]) == TOLOWER(_currentArr[0])
+		{
+			_return = _i
+		}
+		
+		_i++
+	}
+	
+	_return
+}
+
+GETTBHoursFormatted
+{
+	_return = ""
+	//get the hours for the current time block
+	_pos = GETTBHRS(_argv[0])
+	_timeBlock = timeBlocks[_pos]
+	
+	//if we got a valid result, lets format it!
+	if _timeBlock != -1 
+	{
+		_i = 1
+		
+		while _i < ARRAYSIZE(_timeBlock)
+		{
+			//first loop
+			if _i == 1
+			{
+				if _timeBlock[_i] == 12 
+				{
+					_return += "12:00"
+					if ARRAYSIZE(_timeBlock) == 2
+					{
+						_return += "PM"
+					}
+				}
+				elseif _timeBlock[_i] == 24
+				{
+					_return += "12:00"
+					if ARRAYSIZE(_timeBlock) == 2
+					{
+						_return += "AM"
+					}
+				}
+				elseif TOINT(_timeBlock[_i]) > 12
+				{
+					_civilianHour = TOINT(_timeBlock[_i]) - 12
+					_return += "%_civilianHour:00"
+					if ARRAYSIZE(_timeBlock) == 2
+					{
+						_return += "PM"
+					}
+				}
+				else
+				{
+					_return += "%_timeBlock[_i]:00"
+					if ARRAYSIZE(_timeBlock) == 2
+					{
+						_return += "AM"
+					}
+				}
+			}
+			else
+			{
+				if _timeBlock[_i] == 12 
+				{
+					_return += " - 12:00PM"
+				}
+				elseif _timeBlock[_i] == 24
+				{
+					_return += "- 12:00AM"
+				}
+				elseif TOINT(_timeBlock[_i]) > 12
+				{
+					_civilianHour = TOINT(_timeBlock[_i]) - 12
+					if _civilianHour < 10
+					{
+						_return += " -  %_civilianHour:00PM"
+					}
+					else
+					{
+						_return += " - %_civilianHour:00PM"
+					}
+				}
+				else
+				{
+					if TOINT(_timeBlock[_i]) < 10
+					{
+						_return += " -  %_timeBlock[_i]:00AM"
+					}
+					else
+					{
+						_return += " - %_timeBlock[_i]:00AM"
+					}
+				}
+			}
+			_i++
+		}
+	
+		//if the block is a range, like "morning,5,7"
+		if ARRAYSIZE(_timeBlock) == 3 
+		{
+			
+		}
+		else // the block is a single hour, like "noon,12"
+		{
+		}
+	}
 	_return
 }
 

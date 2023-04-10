@@ -4,7 +4,7 @@
 //		This file will have all the menu-related functions that call the language-specific ones
 // 							MAIN MENU
 //							CHAT MENU
-//							BALLOON COLOUR OPTIONS MENU
+//							OPTIONS MENU
 //************************************************************************
 //							   MAIN MENU
 //****************************************************************
@@ -28,6 +28,11 @@ OnMouseDoubleClick
 }
 
 MouseDoubleClickSakura
+{
+	EVAL("%(setlang)OpenSakuraMenu")
+}
+
+Select.MouseDoubleClickSakura
 {
 	EVAL("%(setlang)OpenSakuraMenu")
 }
@@ -883,8 +888,56 @@ Select.neitherSway
 }
 
 //************************************************************************
-//							   BALLOON COLOUR OPTIONS MENU
+//							   OPTIONS MENU
 //****************************************************************
+
+OnGhostSettingsMenu
+{
+	EVAL("%(setlang)GhostSettingsMenu")
+}
+
+OnChangeTimeBlockHours
+{
+	EVAL("%(setlang)ChangeTimeBlockHours")
+}
+
+Select.ChangeTBTime
+{
+	"\![open,inputbox,OnTBTimeTeach,-1,--reference=%(_argv[0])]\e"
+}
+
+OnTBTimeTeach
+{
+	_TB = reference2 
+	_setHours = CUTSPACE(reference.raw[0])
+
+	_TBPos = GETTBHRS(_TB)
+	_tempArray = timeBlocks[_TBPos]
+	_blockname = _tempArray[0]
+	
+	SETDELIM(_setHours,"-")
+	if ARRAYSIZE(_setHours) > 1
+	{
+			_newTimeBlockHours = _blockname
+			_newTimeBlockHours += "," + _setHours[0]
+			_newTimeBlockHours += "," + _setHours[1]
+			
+			timeBlocks[_TBPos] = _newTimeBlockHours
+	}
+	else
+	{
+		if TOINT(_setHours) != 0
+		{
+			_newTimeBlockHours = _blockname
+			_newTimeBlockHours += "," + _setHours
+			
+			timeBlocks[_TBPos] = _newTimeBlockHours
+		}
+	}
+	--
+	OnChangeTimeBlockHours
+	
+}
 
 OnTrollianColourOptsMenu
 {

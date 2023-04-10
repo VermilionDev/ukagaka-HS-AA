@@ -5,7 +5,7 @@
 // 							MAIN MENU
 //							TOPIC MENU
 //							CHAT MENU
-//							BALLOON COLOUR OPTIONS MENU
+//							OPTIONS MENU
 //************************************************************************
 //							   MAIN MENU
 //****************************************************************
@@ -34,7 +34,7 @@ enOpenSakuraMenu
 	"%*\q[I wanna tell you something!,OnChatMenu]\n"
 	"%*\q[I've got something to say!,OnChatMenu]\n"
 	--
-	"%*\q[Balloon Menu,OnTrollianColourOptsMenu]\n/
+	"%*\q[Configure Settings,OnGhostSettingsMenu]\n/
 	%*\q[Functions,dosomething]\n\n[half]/
 	%*\q[Nevermind,CANCEL]\e"
 }
@@ -609,14 +609,63 @@ enNeitherSway
 }
 
 //************************************************************************
-//							   BALLOON COLOUR OPTIONS MENU
+//							   OPTIONS MENU
 //****************************************************************
+
+enGhostSettingsMenu
+{
+	"\0%sb(1)\s[0]You decide to change...%spc(0)\_q"
+	--
+	"%*\q[Time Blocks Hours,OnChangeTimeBlockHours]\n/
+	%*\q[Trollian Border Colour,OnTrollianColourOptsMenu]\n"
+	--
+	"%*\q[Go Back,MouseDoubleClickSakura]\n"
+}
+
+enChangeTimeBlockHours
+{
+	_postMidnight = GETTBHoursFormatted("postMidnight")
+	_dawnHours = GETTBHoursFormatted("dawn")
+	_morningHours = GETTBHoursFormatted("morning")
+	_noonHours = GETTBHoursFormatted("noon")
+	
+	_afternoonHours = GETTBHoursFormatted("afternoon")
+	_eveningHours = GETTBHoursFormatted("evening")
+	_nightHours = GETTBHoursFormatted("night")
+	_midnightHours = GETTBHoursFormatted("midnight")
+	
+	"\0%sb(1)\s[0]"
+	--
+	"Is dawn for me dusk for you, and you'd like aradia to know when you're really up? Have I got the menu for you!\_q%spc(0)"
+	--
+	"%*\q[Dawn,ChangeTBTime('Dawn')]%spc(2)%sf('ar')%_dawnHours%sf(0)\n%sf('al')"
+	--
+	"%*\q[Morning,ChangeTBTime('Morning')]%spc(2)%sf('ar')%_morningHours%sf(0)\n%sf('al')"
+	--
+	"%*\q[Noon,ChangeTBTime('Noon')]%spc(2)%sf('ar')%_noonHours%sf(0)\n%sf('al')"
+	--
+	"%*\q[Afternoon,ChangeTBTime('Afternoon')]%spc(2)%sf('ar')%_afternoonHours%sf(0)\n%sf('al')"
+	--
+	"%*\q[Evening,ChangeTBTime('Evening')]%spc(2)%sf('ar')%_eveningHours%sf(0)\n%sf('al')"
+	--
+	"%*\q[Night,ChangeTBTime('Night')]%spc(2)%sf('ar')%_nightHours%sf(0)\n%sf('al')"
+	--
+	"%*\q[Midnight,ChangeTBTime('Midnight')]%spc(2)%sf('ar')%_midnightHours%sf(0)\n%sf('al')"
+	--
+	"%*\q[Post-Midnight,ChangeTBTime('postMidnight')]%spc(2)%sf('ar')%_postMidnight%sf(0)\n%sf('al')%spc(0)"
+	--
+	"%*\q[Go Back,OnGhostSettingsMenu]\n/
+	%*\q[Main Menu,MouseDoubleClickSakura]"
+}
 
 enTrollianColourOpts
 {
 	_hsCat = _argv
 	
-	"%sb(1)\_q\![set,autoscroll,disable] balloon is %(bColour)\n"
+	"%sb(1)\_q\![set,autoscroll,disable]"
+	--
+	"%*\q[Go Back,OnGhostSettingsMenu]\n/
+	%*\q[Main Menu,MouseDoubleClickSakura]%spc(0)"
 	--
 	if _hsCat[0] == 0 //show the category options
 	{
@@ -781,7 +830,9 @@ enTrollianColourOpts
 		"%sf('nb')Misc%sf('fb')%spc(2)%sf('ar')\q[Show,OnshowCat,%(CHR(34))%(_hsCat)%(CHR(34)),5]%spc(0)%sf('al')"
 	}
 	--
-	//"\x\e"
+	"%*\q[Go Back,OnGhostSettingsMenu]\n/
+	%*\q[Main Menu,MouseDoubleClickSakura]"
+	
 }
 
 
