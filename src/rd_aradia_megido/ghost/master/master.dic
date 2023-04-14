@@ -5,7 +5,6 @@
 //							BOOT FUNCTIONS
 //							CLOSE FUNCTIONS
 //							NETWORK FUNCTIONS
-//							SHELL FUNCTIONS
 //							Shortcut FUNCTIONS
 //							MENUS - Now found in menuMaster.dic & %(setlang)/menu.dic
 //							AITALK
@@ -15,45 +14,27 @@
 setFirstBootVars
 {
 	//global variables default values
-	
-	//current langauge- only english aradia is available (..for now..)
 	setlang = "en" 
-	//enables typing quirks if the character has one
 	onQuirk = 1
-	//the type of quirk if the character has multiple
 	nowQuirk = "alive"
-	//adds the characters' username before they talk
-	//intended to be used with trollian/pesterchum/
 	chatBalloon = 1
-	//in case i add "sleeping/sitting/floating" modes (means "ghost state")
 	gState = "default"
-	//this colour is trollian's pink - the border i saw most often in the available pictures of trollian i found
 	bColour = "500"
-	
-	//what aradida knows about our version of Earth - "ghost knowledge"
 	gKnow = IARRAY
 	gMood = IARRAY
-	_mood = RAND(100)
-	_bootTime = year + "-" + month + "-" + day + "-" + hour + "," + _mood
-	gMood = (_bootTime,IARRAY)
+	//_mood = RAND(100)
+	//_bootTime = year + "-" + month + "-" + day + "-" + hour + "," + _mood
+	//gMood = (_bootTime,IARRAY)
+	timeBlocks = IARRAY
+	timeBlocks = ("dawn,5,7","morning,8,11","noon,12","afternoon,13,16","evening,17,19","night,20,23","midnight,24","postMidnight,1,4")
+	userInfo = ("name,","username,","chatType,","species,","birthday,","gameState,","class,","aspect,","lunarSway,")
 }
 
 setBootVars
 {
-	setlang = "en" 
-	onQuirk = 1
-	nowQuirk = "alive"
-	chatBalloon = 1
-	gState = "default"
-	bColour = "306"
-	gKnow = IARRAY
-	timeBlocks = IARRAY
-	timeBlocks = ("dawn,5,7","morning,8,11","noon,12","afternoon,13,16","evening,17,19","night,20,23","midnight,24","postMidnight,1,4")
-						
-	userInfo = ("name,","username,","chatType,","species,","birthday,","gameState,","class,","aspect,","lunarSway,")
-	_mood = RAND(100)
-	_bootTime = year + "-" + month + "-" + day + "-" + hour + "," + _mood
-	gMood ,= (_bootTime)
+	//_mood = RAND(100)
+	//_bootTime = year + "-" + month + "-" + day + "-" + hour + "," + _mood
+	//gMood ,= (_bootTime)
 }
 
 GETUIINDEX
@@ -210,7 +191,7 @@ enFirstBoot
 	
 	"\0\s[0]%sb(1)%sf(0)???? [??] began ???? %sf('306')\napocalypseArisen [AA]%sf(0) at %(_time) --\n%sf('306')%spc(0)AA:...\nAA:oh! hello there!\w6\nAA:is this another dream bubble ive been to so many\w6\nAA: this doesnt feel like one\w6\nAA: have we met before\n%spc(0)/
 	%*\q[Yes we have!,metbefore]\n/
-	%*\q[No, who are you?,notmetbefore]\n/
+	%*\q[No - who are you?,notmetbefore]\n/
 	%*\q[Well... (Mention Homestuck) ,tellhstuck]\n/
 	\x\e"
 }
@@ -226,7 +207,7 @@ enBoot
 {
 	"\0\s[0]%sb(0)%sf('306')"
 	--
-	if 0 != 0 //RED TODO: implement time checks for when aradia was last opened vs how long shes been gone on her end
+	if 0 != 0 //RED TODO: time check for when aradia was last opened vs how long shes been gone on her end
 	{
 		"%cb('AA')havent seen you in awhile\n"
 		"%cb('AA')hi again!"
@@ -238,8 +219,8 @@ enBoot
 		"%cb('AA')hey"
 		--
 		"!"
-		" :D"
-		"! :D"
+		"\i[2]\i[0] :D"
+		"!\i[2]\i[0] :D"
 	}
 	--
 	"\x\e"
@@ -262,17 +243,17 @@ Select.tellhstuck
 
 enMetBefore
 {
-	"\s[0]%sb(1)%sf('306')AA: i dont remember you myself\nAA: maybe you met an alternate version of me\nAA: but anyways nice to meet you\nAA: im going to be looking around while im here so feel free to chat :D\x\e"
+	"\s[0]%sb(1)%sf('306')%cb('AA')i dont remember you myself\n%cb('AA')maybe you met an alternate version of me\n%cb('AA')but anyways nice to meet you\n%cb('AA')im going to be looking around while im here so feel free to chat :D\x\e"
 }
 
 enNotMetBefore
 {
-	"\s[0]%sb(1)%sf('306')AA: me either my name is aradia and im made of time\nAA: maid of time actually\nAA: its always nice to meet new people \nAA: and it also nice that we are both new to eachother :D\nAA: im going to be looking around while im here so feel free to chat\x\e"
+	"\s[0]%sb(1)%sf('306')%cb('AA')me either my name is aradia and im made of time\n%cb('AA')maid of time actually\n%cb('AA')its always nice to meet new people \n%cb('AA')and its also nice that we are both new to eachother\i[2] :D\n%cb('AA')im going to be looking around while im here so feel free to chat\x\e"
 }
 
 enTellhstuck
 {
-	"\s[0]%sb(1)You tell Aradia about the comic\n'Homestuck'.%spc(0)%sf('306')\nAA: interesting!\nAA: so you dont know me but you have heard about me\nAA: nice to meet you! \nAA: im going to be looking around while im here so feel free to chat :D\x\e"
+	"\s[0]%sb(1)You tell Aradia about the comic\n'Homestuck'.%spc(0)%sf('306')\n%cb('AA')interesting!\n%cb('AA')so you dont know me but you have heard about me\nAA: nice to meet you! \n%cb('AA')im going to be looking around while im here so feel free to chat\i[2] :D\x\e"
 }
 
 //************************************************************************
@@ -286,7 +267,11 @@ OnClose
 
 enClose
 {
-	"\0\s[0]%sb(0)See you!\e"
+	"\0\s[0]%sb(0)see you!\w8\e"
+	"\0\s[0]%sb(0)bye bye!\w8\e"
+	"\0\s[0]%sb(0)bye!\w8\e"
+	"\0\s[0]%sb(0)till next time!\w8\e"
+	"\0\s[0]%sb(0)see you later!\w8\e"
 }
 
 //************************************************************************
@@ -345,90 +330,22 @@ OnUpdateCheckComplete
 
 OnUpdateBegin
 {
-	"\0\s[0]Update Begin\e"
+	"\0\s[0]Aradia's getting ready to check for an update.\e"
 }
 
 OnUpdateReady
 {
-	"\0\s[0]Update Ready\e"
+	"\0\s[0]Aradia's ready to update.\e"
 }
 
 OnUpdateComplete
 {
-	"\0\s[0]Update Complete\e"
+	"\0\s[0]Aradia's finished updating.\e"
 }
 
 OnUpdateFailure
 {
-	"\0\s[0]Update Failed\e"
-}
-
-//************************************************************************
-//							SHELL FUNCTIONS
-//****************************************************************
-
-OnShellChanging
- {
-	case reference0
-	{
-		when "Alive Aradia (Default)"
-		{
-			"\0\s[0]ok i can change into my regular outfit\e"
-		}
-		when "Aradiabot"
-		{
-			"\0\s[0]there are many doomed aradiabots i can introduce you to\e"
-		}
-		when "Aradiasprite"
-		{
-			"\0\s[0]im sure theres one version of me that somehow died as a kernelsprite\e"
-		}
-		when "Ghost Aradia"
-		{
-			"\0\s[0]sure i can find a dead aradia for you to hang out with\e"
-		}
-		when "God Tier"
-		{
-			"\0\s[0]ok i can put on my god tier clothes outfit\e"
-		}
-	}
- }
-
-OnShellChanged
-{
-	case reference0
-	{
-		when "Alive Aradia (Default)"
-		{
-			nowShell = "default"
-			nowQuirk = "happy"
-			"\0\s[0]being alive is a very enjoyable thing\ni spent so much time dead i had forgotten how it felt\e"
-		}
-		when "Aradiabot"
-		{
-			nowShell = "robot"
-			nowQuirk = "deadfrog"
-			"\0\s[0]this f0rm is 0nly a m0derate impr0vement fr0m being dead\nbut its 0k i guess\e"
-		}
-		when "Aradiasprite"
-		{
-			nowShell = "kernelsprite"
-			nowQuirk = "deadfrog"
-			"\0\s[0]being part fr0g was critical to my sessions success\w8\nribbit\w8\nwh00ps\e"
-		}
-		when "Ghost Aradia"
-		{
-			nowShell = "ghost"
-			nowQuirk = "dead"
-			"\0\s[0]0k im dead n0w\e"
-		}
-		when "God Tier"
-		{
-			nowShell = "godtier"
-			nowQuirk = "happy"
-			"\0\s[0]do you like my wings\ni like them\nthough if alternia still existed i would have been culled for such a mutation\e"
-		}
-	}
+	"\0\s[0]Aradia's update failed.\e"
 }
 
 //************************************************************************
@@ -631,63 +548,30 @@ RandomTalk
 
 enRandomTalk : nonoverlap_pool
 {
-	//-------RandomTalk Variables for testing
-	_morbidChatAllowed = 0
-	_toldOnComputer = 0
-	_userInMedium = 1
-	_userIsDersite = 1
-	_mood = "good" //"good", "neutral" or "bad"
+	//get user info
+	_LSPos = GETUIINDEX("lunarSway")
+	_lunarSway = userInfo[_LSPos][1]
 	
-	_currTime = "morning" // "dawn", "morning", "noon", "afternoon", "earlyTwilight", "night", "midnight", "postMidnight"
-	//-------end of variables -----------------------------------
-	//Dialogue that doesn't care about aradia's quirk
 	{
 		"\0\s[0]%sb(0)You see Aradia look around the screen"
 		--
-		if _toldOnComputer == 1
-		{
-			". She seems focused on what you're doing\n(or not doing)."
-			". She seems focused on your desktop background."
-			". Briefly, she rests her palm against it,\nbut pulls her hand back."
-		}
-		else
-		{
-			" but you're not sure she understands what it is she is looking at."
-			" but you can't quite tell how she feels about it."
-			". You think she seems a bit curious about it."
-		}
-
+		". She seems focused on what you're doing\n(or not doing)."
+		". She seems focused on your desktop background."
+		". Briefly, she rests her palm against it,\nbut pulls her hand back."
+		" but you can't quite tell how she feels about it."
+		". You think she seems a bit curious about it."
 	}
 	
-	
-	
-	//----------if aradia's quirk is active, and is the "alive" type -----------------------------------------
-	if onQuirk == 1 && nowQuirk == "alive"
 	{
-		if _toldOnComputer == 0
-		{
-			"\0\s[0]%sb(0)%sf('306')%cb('AA')i cant figure out what it is exactly\n%cb('AA')but im sure this isnt a regular dream bubble"
-			
-			{
-					"\0\s[0]%sb(0)%sf('306')%cb('AA')you know\n%cb('AA')im not really sure how i arrive here"
-					--
-					""
-					if _mood == "good" 
-					{
-						"\n%cb('AA')but its nice to hang out with you when i do"
-					}
-					elseif _mood == "neutral" 
-					{
-						"\n%cb('AA')but i guess thats the nature of paradox space to do the unexplainable"
-					}
-					else
-					{
-						"\n%cb('AA')going back in time doesnt seem to take me back to the bubble i was in before"
-					}
-			}
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')i learned from a human that they can lose as much as 50% of their blood before dying\n%cb('AA')though humans will likely pass out before then\n%cb('AA')trolls and especially highbloods can withstand much greater bloodloss"
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')people can eat anything at least once\n%cb('AA')i first heard that phrase from a human\n%cb('AA')but i think the logic applies to any creature that can eat"
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')some corpses, like human ones, will still grow hair and nails for a short time after dying\n%cb('AA')sorry if that was innapropriate ive been told i have a death fan girl thing"
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')apparently some human cultures use the bones of their dead peers for tools or decoration\n%cb('AA')instead of putting the dead in a box for a corpse party"
 		}
-		
-		{
+	
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')its nice to have a break sometimes\e"
+	
+	{
 			"\0\s[0]%sb(0)%sf('306')%cb('AA')dream bubbles are "
 			--
 			"very "
@@ -701,36 +585,31 @@ enRandomTalk : nonoverlap_pool
 			--
 			"\n%cb('AA')a mashup of everyone's memories both dead and living\n%cb('AA')the environments that form can seem to be new places altogether"
 			"\n%cb('AA')ive been exploring them for sweeps\n%cb('AA')and i always seem to find something new going on"
-		}
-		
-		if _userInMedium == 1
-		{
-			"\0\s[0]%sb(0)%sf('306')%cb('AA')have you slept much while youve been playing\n%cb('AA')one friend of mine slept for the majority of our session\n%cb('AA')another did not sleep at all"
-			
-			if _userIsDersite == 1
-			{
-				"\0\s[0]%sb(0)%sf('306')%cb('AA')do you go on derse much\n%cb('AA')during my own game i wasnt%cb('AA')though i suppose at the time i was dead"
-				"%cb('AA')have you been on derse when the moon enters the veil\n%cb('AA')the voices of the outer gods get much clearer when it is"
-			}
-			
-			if _userIsProspitan == 1
-			{
-				"%cb('AA')have you been on prospit when the moon dips into skaias clouds\n%cb('AA')many things that have happened\n%cb('AA')are happening\n%cb('AA')or will happen\n%cb('AA')are visible in the clouds during that time"
-			}
-		}
-		
-		if _morbidChatAllowed == 1
-		{
-			{
-				"\0\s[0]%sb(0)%sf('306')%cb('AA')i learned from a human that they can lose as much as 50% of their blood before dying\n%cb('AA')though humans will likely pass out before then\n%cb('AA')trolls and especially highbloods can withstand much greater bloodloss"
-				"\0\s[0]%sb(0)%sf('306')%cb('AA')people can eat anything at least once\n%cb('AA')i first heard that phrase from a human\n%cb('AA')but i think the logic applies to any creature that can eat"
-				"\0\s[0]%sb(0)%sf('306')%cb('AA')some corpses, like human ones, will still grow hair and nails for a short time"
-				"\0\s[0]%sb(0)%sf('306')%cb('AA')apparently some human cultures use the bones of their dead peers for tools or decoration\n%cb('AA')instead of putting the dead in a box for a corpse party"
-			}
-			
-		}
-		
 	}
-	--
-	"\e"
+	
+	if _lunarSway == "prospit"
+	{
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')having the ability to see skaias prophecies has always made dersite carpacians jealous and hateful of prospitans\w8\n%cb('AA')or perhaps they are cloned to behave that way like an instinct of sorts\w8\e"
+		
+		{
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')prospitan carpacians are very accepting and forgiving\w8\n%cb('AA')almost to the point of being doormats"
+		--
+		""
+		"\w8\n%cb('AA')though some can be sticklers for making sure mail gets delivered"
+		--
+		"\w8\e"
+		}
+	}
+	elseif _lunarSway == "both"
+	{
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')having a dream self on both moons can seem quite advantagous\w8\n%cb('AA')for sollux it though the voices from the veil bothered him\w8\e"
+		
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')it can seem unfair to other players that someone who has a dream self on both moons\w8\n%cb('AA')but no matter how many lives you have it wont stop a rogue agent from teleport-murdering everyone in a session\w8\e"
+	}
+	elseif _lunarSway == "neither"
+	{
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')i wonder what kind of person you have to be to not be given a place on either prosit or derse\w8\e"
+		
+		"\0\s[0]%sb(0)%sf('306')%cb('AA')since there can be players without a prospit or derse leaning\n%cb('AA')i wonder if theres other things players could not have and yet succeed just fine\w8\e"
+	}
 }

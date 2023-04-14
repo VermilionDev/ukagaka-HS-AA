@@ -20,17 +20,17 @@ shiori.logo.filename,resources\niseshiori.png
 shiori.logo.x,16
 shiori.logo.y,256
 
-menu.background.font.color.r,0
-menu.background.font.color.g,0
-menu.background.font.color.b,0
+menu.background.font.color.r,255
+menu.background.font.color.g,255
+menu.background.font.color.b,255
 
 menu.foreground.font.color.r,255
 menu.foreground.font.color.g,255
 menu.foreground.font.color.b,255
 
-menu.disable.font.color.r,222
-menu.disable.font.color.g,222
-menu.disable.font.color.b,222
+menu.disable.font.color.r,200
+menu.disable.font.color.g,200
+menu.disable.font.color.b,200
 
 menu.separator.color.r,240
 menu.separator.color.g,240

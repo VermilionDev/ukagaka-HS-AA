@@ -31,11 +31,10 @@ enOpenSakuraMenu
 	"%*\q[Can we talk about...,OnTopicMenu]\n"
 	"%*\q[Can we chat about...,OnTopicMenu]\n"
 	--
-	"%*\q[I wanna tell you something!,OnChatMenu]\n"
-	"%*\q[I've got something to say!,OnChatMenu]\n"
+	"%*\q[I wanna tell you something!,OnChatMenu]%spc(0)"
+	"%*\q[I've got something to say!,OnChatMenu]%spc(0)"
 	--
 	"%*\q[Configure Settings,OnGhostSettingsMenu]\n/
-	%*\q[Functions,dosomething]\n\n[half]/
 	%*\q[Nevermind,CANCEL]\e"
 }
 
@@ -50,7 +49,6 @@ enTopicMenu
 	--
 	"%*\q[Aradia,OnSakuraTalk]          %*\q[Her friends,OnTheirFriends]\n/
 	%*\q[Dreams,OnDreamTalk]          %*\q[Dancesters,OnDancesterTalk]\n/
-	%*\q[Trolls,OnTrollTalk]          %*\q[Humans,OnHumanTalk]\n/
 	%*\q[Other Species,OnOtherSpeciesTalk]%spc(0)"
 	--
 	"%*\q[The game,OnGameTalk]\n/
@@ -64,47 +62,58 @@ enTopicMenu
 
 enSakuraTalk
 {
-	"%cb('AA')i just go with the flow\n%cb('AA')see what is out there"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')i just go with the flow\n%cb('AA')see what is out there\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')when i lived on alternia i was interested in archeology\n%cb('AA')i suppose i still am but there not much spelunking to do in dream bubbles\e"
 }
 
 enTheirFriends
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')karkat is very loud but he means well\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')tavros is very kind and easy to be friends with\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')feferis quite nice despite her bloodline as a fushcia\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')sollux is quite happy now\w8\n%cb('AA')now that hes half dead\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')i dont have much to say about vriska\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')theres not really anything i want to say about eridian\e"
 }
 
 enDreamTalk
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')i spend most of my time in bubbles its very fun\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')a lot of people i meet in dream bubbles are alternate versions of people i already know\n%cb('AA')sometimes even an alternate of myself\e"
 }
 
 enDancesterTalk
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')damara has an alternian accent thats hard for me to understand sometimes\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')i dont talk to my own dancestor much\e"
 }
 
 enTrollTalk
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')unimplemented\e"
 }
 
 enHumanTalk
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')unimplemented\e"
 }
 
 enOtherSpeciesTalk
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')cherubs have different multiple blood colours just like trolls%cb('AA')only two though and for very different reasoning\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')first guardians are very important to planets that will play skaias game\w8\n)%cb('AA')also incredibly dangerous\e"
 }
 
 enGameTalk
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')my session was very strange\w8\n)%cb('AA')but perhaps every session has strange exceptions\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')i wonder sometimes about my affect on people playing their sessions\w8\n)%cb('AA')though there are many things that will doom a session not just me so oh well\e"
 }
 
 enClasspectTalk
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')for people that arent aligned with teh time or space aspect the veil can be a very confusing place\e"
+	
 }
 
 //************************************************************************
@@ -163,8 +172,9 @@ enTrollsNames
 enAcceptedName
 {
 	_pos = GETUIINDEX("name")
+	_name = TOLOWER(userInfo[_pos][1])
 	
-	"\0\s[0]\f[color,161,0,0]okay i can call you %userInfo[_pos][1]"
+	"\0\s[0]\f[color,161,0,0]okay i can call you %_name\e"
 }
 
 //telling aradia your username
@@ -199,8 +209,10 @@ enTrollsUsername
 enAcceptedUsername
 {
 	_pos = GETUIINDEX("username")
+	_username = userInfo[_pos][1]
+	_initials = userInfo[_pos][2]
 	
-	"%cb('AA')so your username is %userInfo[_pos][1] and your initials are %userInfo[_pos][2]\n%cb('AA')interesting\e"
+	"%cb('AA')so your username is %_username and your initials are %_initials\n%cb('AA')alright\e"
 }
 
 //users chat type
@@ -211,28 +223,27 @@ enTellChatType
 	"%*\q[Pester,pesterChat]\n/
 	%*\q[Troll,trollChat]\n/
 	%*\q[Cheer,cheerChat]\n/
-	%*\q[Jeer,jeerChat]\n/
-	%*\q[Something Else,customChatType]\n"
+	%*\q[Jeer,jeerChat]\n"
 }
 
 enPesterChat
 {
-	"%cb('AA')just like some humans i know"
+	"%cb('AA')some humans i know chat like that\e"
 }
 
 enTrollChat
 {
-	"%cb('AA')just like my troll friends do :D"
+	"%cb('AA')me and my troll friends chat like that\i[2] :D\e"
 }
 
 enCheerChat
 {
-	"%cb('AA')that sounds like a very <3 <> way to chat"
+	"%cb('AA')that sounds like a very <3 <> way to chat\e"
 }
 
 enJeerChat
 {
-	"%cb('AA')that sounds like a very <3< c8< way to chat"
+	"%cb('AA')that sounds like a very <3< c8< way to chat\e"
 }
 
 //users species
@@ -245,8 +256,7 @@ enTellSpecies
 	%*\q[Sprite,spriteSpecies]\n/
 	%*\q[Carapacian,chessSpecies]\n/
 	%*\q[Cherub,cherubSpecies]\n/
-	%*\q[Leprechaun,luckySpecies]\n/
-	%*\q[Something Else,customSpecies]%spc(1)"
+	%*\q[Leprechaun,luckySpecies]%spc(1)"
 	--
 	"%*\q[Go Back,OnChatMenu]\n/
 	%*\q[Nevermind,CANCEL]"
@@ -254,32 +264,32 @@ enTellSpecies
 
 enHumanSpecies
 {
-	"Unimplemented\e"
+	"Unimplemented response (but she does know youre human!)\e"
 }
 
 enTrollSpecies
 {
-	"Unimplemented\e"
+	"Unimplemented response (but she does know youre a troll!)\e"
 }
 
 enSpriteSpecies
 {
-	"Unimplemented\e"
+	"Unimplemented response (but she does know youre a sprite!)\e"
 }
 
 enChessSpecies
 {
-	"Unimplemented\e"
+	"Unimplemented response (but she does know youre a carpacian!)\e"
 }
 
 enCherubSpecies
 {
-	"Unimplemented\e"
+	"Unimplemented response (but she does know youre a cherub!)\e"
 }
 
 enLuckySpecies
 {
-	"Unimplemented\e"
+	"Unimplemented response (but she does know youre a leprechaun!)\e"
 }
 
 //users hemotype (if they say theyre a troll)
@@ -298,8 +308,7 @@ enTellHemotype
 	%*\q[Indigo,indigoBlood]\n/
 	%*\q[Purple,purpleBlood]\n/
 	%*\q[Violet,violetBlood]\n/
-	%*\q[Fuchsia,fuchsiaBlood]\n/
-	%*\q[Something Else,customBlood]%spc(1)"
+	%*\q[Fuchsia,fuchsiaBlood]%spc(1)"
 	--
 	"%*\q[Go Back,OnChatMenu]\n/
 	%*\q[Nevermind,CANCEL]"
@@ -331,9 +340,61 @@ enTellBirthday
 {
 	_pos = GETUIINDEX("birthday")
 	
-	"so from the earth calender youre born on the %userInfo[_pos][2] month\n"
+	case userInfo[_pos][2]
+	{
+		when "1"
+		{
+			_birthmonth = "janurary"
+		}
+		when "2"
+		{
+			_birthmonth = "february"
+		}
+		when "3"
+		{
+			_birthmonth = "march"
+		}
+		when "4"
+		{
+			_birthmonth = "april"
+		}
+		when "5"
+		{
+			_birthmonth = "may"
+		}
+		when "6"
+		{
+			_birthmonth = "june"
+		}
+		when "7"
+		{
+			_birthmonth = "july"
+		}
+		when "8"
+		{
+			_birthmonth = "august"
+		}
+		when "9"
+		{
+			_birthmonth = "september"
+		}
+		when "10"
+		{
+			_birthmonth = "october"
+		}
+		when "11"
+		{
+			_birthmonth = "november"
+		}
+		when "12"
+		{
+			_birthmonth = "december"
+		}
+	}
+	
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')so from the earth calender youre born in %_birthmonth\n"
 	--
-	"what about the day"
+	"%cb('AA')what about the day"
 	--
 	"\![open,inputbox,OnBirthdayTeach,-1]\e"
 }
@@ -347,13 +408,13 @@ enBirthdayInvalid
 
 enBirthdayLeap
 {
-	"so you were born on a leap year"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')so you were born on a leap year"
 }
 
 enBirthdayValid
 {
 	//RED TODO: check if the date is todays date
-	"ill remember that :D"
+	"ill remember that\i[2] :D"
 }
 
 //users gameState
@@ -373,27 +434,27 @@ enTellGameStatus
 
 enGameSoon
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')Unimplemented\e"
 }
 
 enGameNow
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')Unimplemented\e"
 }
 
 enGameWon
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')Unimplemented\e"
 }
 
 enGameLost
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')Unimplemented\e"
 }
 
 enSkaiaSaidNo
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')Unimplemented\e"
 }
 
 //users class
@@ -423,72 +484,72 @@ enTellClass
 
 enBardClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like gamzee he was a bit of a wildcard in my session\e"
 }
 
 enHeirClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like equius\e"
 }
 
 enKnightClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like karkat he was always trying to be the leader of both our sessions teams\n%cb('AA')thats also like dave though he didnt do much leading in his session since he was a knight of time not blood\e"
 }
 
 enLordClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like calliopes brother i hope youre not like him\e"
 }
 
 enMageClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like sollux\e"
 }
 
 enMaidClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like me!\i[2] :D\e"
 }
 
 enMuseClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like calliope shes a very nice cherub\e"
 }
 
 enPageClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like tavros\e"
 }
 
 enPrinceClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like erdian i hope youre nicer than him\e"
 }
 
 enRogueClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like nepeta shes very sweet\e"
 }
 
 enSeerClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like terezi and rose\e"
 }
 
 enSylphClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like kanaya\e"
 }
 
 enThiefClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like vriska\e"
 }
 
 enWitchClass
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like feferi\e"
 }
 
 //users aspect
@@ -516,62 +577,62 @@ enTellAspect
 
 enBloodAspect
 {
-	"%cb('AA')thats like karkat"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like karkat"
 }
 
 enBreathAspect
 {
-	"%cb('AA')thats like tavros"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like tavros"
 }
 
 enDoomAspect
 {
-	"%cb('AA')thats like sollux"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like sollux"
 }
 
 enHeartAspect
 {
-	"%cb('AA')thats like nepeta"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like nepeta"
 }
 
 enHopeAspect
 {
-	"%cb('AA')thats like eridian"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like eridian"
 }
 
 enLifeAspect
 {
-	"%cb('AA')thats like feferi"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like feferi"
 }
 
 enLightAspect
 {
-	"%cb('AA')thats like vriska"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like vriska"
 }
 
 enMindAspect
 {
-	"%cb('AA')thats like terezi"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like terezi"
 }
 
 enRageAspect
 {
-	"%cb('AA')thats like gamzee"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like gamzee"
 }
 
 enSpaceAspect
 {
-	"%cb('AA')thats like kanaya"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like kanaya"
 }
 
 enTimeAspect
 {
-	"%cb('AA')thats like me :D"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like me\i[2] :D"
 }
 
 enVoidAspect
 {
-	"%cb('AA')thats like equius"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like equius"
 }
 
 //users lunar sway
@@ -590,22 +651,22 @@ enTellLunarSway
 
 enDerseSway
 {
-	"%cb('AA')thats like me :D"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like me :D"
 }
 
 enProspitSway
 {
-	"Unimplemented\e"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')Unimplemented response (but she knows youre prospitan!)\e"
 }
 
 enBothSway
 {
-	"%cb('AA')thats like sollux he had two dream selves"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')thats like sollux he had two dream selves"
 }
 
 enNeitherSway
 {
-	"%cb('AA')interesting ive never heard of that before\n%cb('AA')but skaia does make a lot of exceptions things that we thought were rules"
+	"\0\s[0]%sb(0)%sf('306')%cb('AA')interesting ive never heard of that before\n%cb('AA')but skaia does make a lot of exceptions things that we thought were rules"
 }
 
 //************************************************************************
@@ -622,6 +683,24 @@ enGhostSettingsMenu
 	"%*\q[Go Back,MouseDoubleClickSakura]\n"
 }
 
+enShiftTimeBlocks
+{
+	"Enter a positive or negative integer\n/
+	that is not 0 nor exceeding -23 or 23%spc(0)"
+	--
+	"\![open,inputbox,OnShiftTimeBlockInput,-1]\e"
+}
+
+enInvalidTimeBlockInput
+{
+	"Invalid entry. Try again.\x\c\_q"
+	--
+	"Enter a positive or negative integer\n/
+	that is not 0 nor exceeding -23 or 23%spc(0)"
+	--
+	"\![open,inputbox,OnShiftTimeBlockInput,-1]\e"
+}
+
 enChangeTimeBlockHours
 {
 	_postMidnight = GETTBHoursFormatted("postMidnight")
@@ -636,7 +715,9 @@ enChangeTimeBlockHours
 	
 	"\0%sb(1)\s[0]"
 	--
-	"Is dawn for me dusk for you, and you'd like aradia to know when you're really up? Have I got the menu for you!\_q%spc(0)"
+	"When aradia say time-related\ndialogue she checks these- change the times she considers morning\n/noon/night/etc here!\_q%spc(0)"
+	--
+	"%*\q[Shift All Time Blocks by...,OnShiftTimeBlocks]%spc(0)"
 	--
 	"%*\q[Dawn,ChangeTBTime('Dawn')]%spc(2)%sf('ar')%_dawnHours%sf(0)\n%sf('al')"
 	--
@@ -653,6 +734,8 @@ enChangeTimeBlockHours
 	"%*\q[Midnight,ChangeTBTime('Midnight')]%spc(2)%sf('ar')%_midnightHours%sf(0)\n%sf('al')"
 	--
 	"%*\q[Post-Midnight,ChangeTBTime('postMidnight')]%spc(2)%sf('ar')%_postMidnight%sf(0)\n%sf('al')%spc(0)"
+	--
+	"%*\q[Reset To Defaults,OnGhostSettingsMenu]%spc(0)"
 	--
 	"%*\q[Go Back,OnGhostSettingsMenu]\n/
 	%*\q[Main Menu,MouseDoubleClickSakura]"

@@ -1,35 +1,39 @@
 //--Aradia's Poses---------------------------------------------------------
 
+version,1
+
 //base pose
 surface0
 {
-1interval,never
-1pattern0,1000,0,overlay,0,0
 
 element0,overlay,surface0.png,0,0
 
+//eye movement
+animation0.interval,random,4
+animation0.pattern0,overlay,1000,500-1000,0,0
+animation0.pattern1,overlay,-1,900-1500,0,0
+
+//leg movement
+animation1.interval,random,10
+animation1.pattern0,replace,2000,500-1500,49,299
+animation1.pattern1,overlay,-1,1100-5000,0,0
+
+//big smile
+animation2.interval,never
+animation2.pattern0,overlay,1100,0-1000,0,0
+animation2.pattern1,overlay,-1,900-1200,0,0
+
+
 }
 
-//Happy/excited Pose
+//arms up
 surface1
 {
-1interval,never
-1pattern0,1000,0,overlay,0,0
+
+//eyes closed
+animation1.interval,random,8
+animation1.pattern0,overlay,1001,0-1000,0,0
+animation1.pattern1,overlay,-1,500-1500,0,0
 
 element0,overlay,surface1505.png,0,0
 }
-
-//Smile
-surface2
-{
-2interval,never
-2pattern0,1100,0,overlay,0,0
-
-1interval,never
-1pattern0,1000,0,overlay,0,0
-
-element0,overlay,surface0.png,0,0
-}
-
-
-
